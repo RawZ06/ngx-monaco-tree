@@ -1,0 +1,12 @@
+{
+  "name": "ngx-monaco-tree",
+  "version": "1.1.1",
+  "peerDependencies": {
+    "@angular/common": "^13.2.0",
+    "@angular/core": "^13.2.0",
+    "@vscode/codicons": "^0.0.27"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

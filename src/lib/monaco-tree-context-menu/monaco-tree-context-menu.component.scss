@@ -1,0 +1,38 @@
+.monaco-tree-context-menu {
+    position: absolute;
+    color: rgb(240, 240, 240);
+    background-color: rgb(60, 60, 60);
+    font-family: Roboto, sans-serif;
+    font-size: 0.8em;
+    font-weight: 200;
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        min-width: 150px;
+
+        li {
+            display: flex;
+            align-items: center;
+            height: 2em;
+            margin: 10px 0;
+        }
+
+        li.monaco-tree-element {
+            padding: 0 12px;
+            cursor: pointer;
+        }
+
+        li.monaco-tree-element:hover {
+            background: rgb(9, 71, 133);
+        }
+
+        li.monaco-tree-separator {
+            width: 80%;
+            margin: 10px auto;
+            height: 1px;
+            background: rgb(240, 240, 240);
+        }
+    }
+}
