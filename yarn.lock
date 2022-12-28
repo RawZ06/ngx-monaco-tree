@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@vscode/codicons@^0.0.27":
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/@vscode/codicons/-/codicons-0.0.27.tgz#3b842cbcfb478e1c9e1dc6efbbdedd059cc3e567"
-  integrity sha512-NpLkfzPfEOO6s2HH+ISITlaXKYB2XeoYZQY2IV39EaJV3NIBygiLqybHrVtKbaDFfeXyP8McmvvnbWd6YykpGg==
-
 tslib@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
