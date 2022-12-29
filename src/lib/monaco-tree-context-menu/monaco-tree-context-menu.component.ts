@@ -10,6 +10,8 @@ export class MonacoTreeContextMenuComponent {
 	@Input() top: number | undefined;
 	@Input() left: number | undefined
 
+	@Input() theme: 'vs-dark' | 'vs-light' = 'vs-dark';
+
 	@Input() elements: Array<ContextMenuElementSeparator|ContextMenuElementText> = []
 
 	constructor(private eRef: ElementRef) {}
