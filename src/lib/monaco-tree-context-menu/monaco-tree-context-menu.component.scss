@@ -1,10 +1,33 @@
 .monaco-tree-context-menu {
     position: absolute;
-    color: rgb(240, 240, 240);
-    background-color: rgb(60, 60, 60);
     font-family: Roboto, sans-serif;
     font-size: 0.8em;
     font-weight: 200;
+	border-radius: 5px;
+
+	&.vs-dark {
+		background: rgb(29, 29, 29);
+		color: white;
+		border: 1px solid rgb(49, 49, 49);
+
+		ul {
+			li.monaco-tree-separator {
+				background: rgb(240, 240, 240);
+			}
+		}
+	}
+
+	&.vs-light {
+		background: rgb(243, 243, 243);
+		color: rgb(97, 97, 97);
+		border: 1px solid rgb(204, 204, 204);
+
+		ul {
+			li.monaco-tree-separator {
+				background: rgb(66, 66, 66);
+			}
+		}
+	}
 
     ul {
         padding: 0;
@@ -26,13 +49,13 @@
 
         li.monaco-tree-element:hover {
             background: rgb(9, 71, 133);
+			color: white;
         }
 
         li.monaco-tree-separator {
             width: 80%;
             margin: 10px auto;
             height: 1px;
-            background: rgb(240, 240, 240);
         }
     }
 }
