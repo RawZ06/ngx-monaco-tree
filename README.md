@@ -14,6 +14,10 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 - Auto Matching between file ou folder name and icon
 - Event on click with path (click to app.module.ts trigger an event with path information (`src/app/app.module.ts`for example)
 
+## Demo
+
+Stackblitz : [ngx-monaco-tree-demo](https://stackblitz.com/fork/ngx-monaco-tree-demo?file=src/app/app.component.ts)
+
 ## Installation
 
 Available on Angular 13 or highter
