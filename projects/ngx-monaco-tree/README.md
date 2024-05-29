@@ -1,6 +1,8 @@
 # NgxMonacoTree
 
-> Warning : This is a proof of concept. Some features will be added in the future.
+[![npm version](https://badge.fury.io/js/ngx-monaco-tree.svg)](https://badge.fury.io/js/ngx-monaco-tree)
+[![Build Status](https://github.com/RawZ06/ngx-monaco-tree/actions/workflows/main.yml/badge.svg)](https://github.com/RawZ06/ngx-monaco-tree/actions/workflows/main.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco-editor) and [vscode](https://github.com/microsoft/vscode) on Angular.
 
