@@ -23,5 +23,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g pnpm
     - run: pnpm install
-    - run: ng build ngx-monaco-tree
+    - run: pnpm build ngx-monaco-tree
     - run: pnpm test
