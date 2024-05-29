@@ -1,0 +1,140 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ngx-monaco-tree": {
+      "projectType": "library",
+      "root": "projects/ngx-monaco-tree",
+      "sourceRoot": "projects/ngx-monaco-tree/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-monaco-tree/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-monaco-tree/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-monaco-tree/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-monaco-tree/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-monaco-tree-test": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ngx-monaco-tree-test",
+      "sourceRoot": "projects/ngx-monaco-tree-test/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/ngx-monaco-tree-test",
+            "index": "projects/ngx-monaco-tree-test/src/index.html",
+            "browser": "projects/ngx-monaco-tree-test/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/ngx-monaco-tree-test/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ngx-monaco-tree-test/src/favicon.ico",
+              "projects/ngx-monaco-tree-test/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/ngx-monaco-tree/assets",
+                "output": "/assets/"
+              }
+            ],
+            "styles": [
+              "projects/ngx-monaco-tree-test/src/styles.scss",
+              "node_modules/@vscode/codicons/dist/codicon.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ngx-monaco-tree-test:build:production"
+            },
+            "development": {
+              "buildTarget": "ngx-monaco-tree-test:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "ngx-monaco-tree-test:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/ngx-monaco-tree-test/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/ngx-monaco-tree-test/src/favicon.ico",
+              "projects/ngx-monaco-tree-test/src/assets"
+            ],
+            "styles": [
+              "projects/ngx-monaco-tree-test/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<div class="form">
+  <span>Dark theme</span>
+  <label class="switch">
+    <input [(ngModel)]="dark" type="checkbox" />
+    <span class="slider round"></span>
+  </label>
+</div>
+<monaco-tree
+  [theme]="dark ? 'vs-dark' : 'vs-light'"
+  [tree]="tree"
+  (clickFile)="currentFile = $event"
+  (clickContextMenu)="handleContextMenu($event)"
+></monaco-tree>
+<span>Current file : {{ currentFile }}</span>
