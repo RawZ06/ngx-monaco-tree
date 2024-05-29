@@ -1,6 +1,6 @@
 {
 	"name": "ngx-monaco-tree",
-	"version": "15.1.1",
+	"version": "15.2.0",
 	"license": "MIT",
 	"description": "A tree view based on monaco-editor powered by VSCode.",
 	"author": "RawZ06",
