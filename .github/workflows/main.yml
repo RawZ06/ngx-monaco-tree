@@ -2,9 +2,9 @@ name: Angular CI
 
 on:
   push:
-    branches: [ "master", "ci" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "*" ]
 
 jobs:
   build:
@@ -26,6 +26,7 @@ jobs:
       - run: pnpm install
       - run: pnpm build ngx-monaco-tree
       - name: Increment version and publish
+        if: github.ref == 'refs/heads/master'
         run: |
           cd projects/ngx-monaco-tree
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
