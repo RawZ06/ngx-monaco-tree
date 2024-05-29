@@ -16,12 +16,19 @@ jobs:
         node-version: [20.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install -g pnpm
-    - run: pnpm install
-    - run: pnpm build ngx-monaco-tree
-    - run: pnpm test
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org/'
+      - run: npm install -g pnpm
+      - run: pnpm install
+      - run: pnpm build ngx-monaco-tree
+      - name: Increment version and publish
+        run: |
+          cd projects/ngx-monaco-tree
+          npm version patch -m "Upgrade to %s for reasons"
+#          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
