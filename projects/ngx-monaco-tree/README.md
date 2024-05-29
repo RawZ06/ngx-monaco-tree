@@ -8,10 +8,16 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 
 ## Changelog
 
-### Dev
+### Current
+- Add color to files
+- Add highlight on selected file or folder
+- Add buttons to create file or folder, and collapse all folders
+
+### 15.2.0 (bad version use 17.1.0)
 - Migrate to Angular 17
 - Migrate from yarn to pnpm
 - Passing to standalone components
+- CI/CD with Github Actions
 
 ### 15.1.1
 - Add demo on stackblitz in README
@@ -70,18 +76,21 @@ styles: [
 ...
 ```
 
-In your app.modules
+Import directly in your module or component
 
 ```typescript
-import { NgxMonacoTreeModule } from 'ngx-monaco-tree';
+import {NgxMonacoTreeComponent} from "./ngx-monaco-tree.component";
+
 @NgModule({
-	...
-	imports: [
-	   ...
-	   NgxMonacoTreeModule,
-	]
+  ...
+    imports: [
+        ...
+        NgxMonacoTreeComponent,
+    ],
 })
-export class AppModule {}
+
+export class AppModule {
+}
 ```
 
 In your app.component.ts
@@ -99,10 +108,10 @@ tree: [
         name: "app",
         content: [
           { name: "app.component.html" },
-          { name: "app.component.css" },
-          { name: "app.component.spec.ts" },
-          { name: "app.component.ts" },
-          { name: "app.module.ts" },
+          { name: 'app.component.css', color: 'gray' },
+          { name: 'app.component.spec.ts', color: 'yellow' },
+          { name: 'app.component.ts', color: 'green' },
+          { name: 'app.module.ts', color: 'red' },
         ],
       },
       {
@@ -174,7 +183,8 @@ Note :
 ```typescript
 type MonacoTreeElement = {
 	name: string;
-	content?: MonacoTreeElement[]
+	content?: MonacoTreeElement[],
+  color?: 'red'|'yellow'|'green'|'gray'|string
 }
 
 type ContextMenuAction = ['new_file'|'new_directory'|'delete_file'|'rename_file', string];
@@ -183,8 +193,6 @@ type ContextMenuAction = ['new_file'|'new_directory'|'delete_file'|'rename_file'
 ## Future features
 
 - Drag & Drop
-- Add icons to create file or folder, refresh and collapse folders
-- Color files
 
 ## Credits
 

@@ -9,7 +9,7 @@ import {
 } from "../monaco-tree-context-menu/monaco-tree-context-menu.type";
 import {ContextMenuAction} from "./monaco-tree-file.type";
 import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco-tree-context-menu.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
 
 function getAbsolutePosition(element: any) {
 	const r = { x: element.offsetLeft, y: element.offsetTop };
@@ -24,16 +24,19 @@ function getAbsolutePosition(element: any) {
 @Component({
   selector: 'monaco-tree-file',
   standalone: true,
-  imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent],
+  imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, NgStyle],
   templateUrl: './monaco-tree-file.component.html',
   styleUrls: ['./monaco-tree-file.component.scss']
 })
 export class MonacoTreeFileComponent {
 	@Input() name = '';
+  @Input() path = '';
+  @Input() color?: string|null|undefined = '';
 	@Input() content: MonacoTreeElement[]|undefined|null = undefined;
 	@Input() depth = 0;
 	@Input() theme: 'vs-dark'|'vs-light' = 'vs-dark';
 	@Input() hide = false;
+  @Input() current: string|null = null;
 
 	@Output() clickFile = new EventEmitter<string>();
 	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
@@ -109,14 +112,13 @@ export class MonacoTreeFileComponent {
 		return this.content !== null && this.content !== undefined
 	}
 
+  get isActive() {
+    return this.current === this.path;
+  }
+
 	handleClickFile(file: string) {
 		this.clickFile.emit(this.name + '/' + file);
 	}
-
-	// handleRightClickFile(e: MouseEvent) {
-	// 	e.preventDefault()
-	// 	this.rightClickFile.emit(e);
-	// }
 
 	handleRightClickFile(event: MouseEvent) {
 		event.preventDefault()
@@ -134,5 +136,26 @@ export class MonacoTreeFileComponent {
 			this.position = [-1000, -1000];
 		}
 	}
+
+  get colorStyle() {
+    switch(this.color) {
+      case 'red':
+        return '#c74e39'
+      case 'yellow':
+        return '#e2c08d'
+      case 'green':
+        return '#81b88b'
+      case 'gray':
+        return '#8c8c8c'
+      default:
+        if(this.color?.startsWith("#")) return this.color;
+        else if(this.color) {
+          console.warn("Invalid color ", this.color, " please use red | yellow | green | gray or a valid hex color with #.")
+          return null;
+        } else {
+          return null;
+        }
+    }
+  }
 
 }

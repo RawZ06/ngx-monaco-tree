@@ -26,10 +26,10 @@ export class AppComponent {
           name: 'app',
           content: [
             { name: 'app.component.html' },
-            { name: 'app.component.css' },
-            { name: 'app.component.spec.ts' },
-            { name: 'app.component.ts' },
-            { name: 'app.module.ts' },
+            { name: 'app.component.css', color: 'gray' },
+            { name: 'app.component.spec.ts', color: 'yellow' },
+            { name: 'app.component.ts', color: 'green' },
+            { name: 'app.module.ts', color: 'red' },
           ],
         },
         {
