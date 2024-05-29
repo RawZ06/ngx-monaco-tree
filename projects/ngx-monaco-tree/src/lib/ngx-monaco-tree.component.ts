@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MonacoTreeElement } from './ngx-monaco-tree.type';
-import {ContextMenuAction} from "./monaco-tree-file/monaco-tree-file.type";
+import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file/monaco-tree-file.type";
 import {MonacoTreeFileComponent} from "./monaco-tree-file/monaco-tree-file.component";
 import {NgForOf} from "@angular/common";
+import {MonacoTreeIconsComponent} from "./monaco-tree-icons/monaco-tree-icons.component";
+import {CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'monaco-tree',
   standalone: true,
-  imports: [MonacoTreeFileComponent, NgForOf],
+  imports: [MonacoTreeFileComponent, MonacoTreeIconsComponent, DragDropModule, NgForOf, CdkDropList],
 	template: `
     <div [style]="'width:' + width + ';height:' + height" [class]="'monaco-tree ' + theme">
-        <monaco-tree-file (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of tree" [name]="row.name" [content]="row.content" [depth]="0" [hide]="false"></monaco-tree-file>
+        <monaco-tree-icons [theme]="theme" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
+        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of tree" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
     </div>
 	`,
 	styleUrls: ['./ngx-monaco-tree.component.scss']
@@ -25,27 +28,33 @@ export class NgxMonacoTreeComponent {
 
 	@Output() clickFile = new EventEmitter<string>();
 	@Output() clickContextMenu = new EventEmitter<ContextMenuAction>();
-	// @Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
+  @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
 
-	// contextMenu: Array<ContextMenuElementSeparator|ContextMenuElementText> = [
-	// 	{type: "element", name: 'New File', action: () => {
-	// 		this.contextMenuClick.emit(["new_file", this.curr ?? ''])
-	// 	} },
-	// 	{type: "element", name: 'New Directory', action: () => {
-	// 			this.contextMenuClick.emit(["new_directory", this.curr ?? ''])
-	// 		} },
-	// 	{type: "separator" },
-	// 	{type: "element", name: 'Delete', action: () => {
-	// 			this.contextMenuClick.emit(["delete_file", this.curr ?? ''])
-	// 	} }
-	// ]
+  currentFile: string|null = null;
 
 	handleClickFile(path: string) {
 		this.clickFile.emit(path);
+    this.currentFile = path;
 	}
 
 	handleClickContextMenu(event: ContextMenuAction) {
 		this.clickContextMenu.emit(event);
 	}
 
+  handleNewFile() {
+    if(this.currentFile !== null) {
+      this.clickContextMenu.emit(["new_file", this.currentFile])
+    }
+  }
+
+  handleNewDirectory() {
+    if(this.currentFile !== null) {
+      this.clickContextMenu.emit(["new_directory", this.currentFile])
+    }
+  }
+
+  handleCollapseAll() {
+    const tree = JSON.parse(JSON.stringify(this.tree));
+    this.tree = tree;
+  }
 }

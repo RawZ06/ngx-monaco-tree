@@ -3,6 +3,7 @@ import { ContextMenuAction, MonacoTreeElement } from 'ngx-monaco-tree';
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {NgxMonacoTreeComponent} from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
+import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
 @Component({
   selector: 'app-root',
@@ -26,10 +27,10 @@ export class AppComponent {
           name: 'app',
           content: [
             { name: 'app.component.html' },
-            { name: 'app.component.css' },
-            { name: 'app.component.spec.ts' },
-            { name: 'app.component.ts' },
-            { name: 'app.module.ts' },
+            { name: 'app.component.css', color: 'gray' },
+            { name: 'app.component.spec.ts', color: 'yellow' },
+            { name: 'app.component.ts', color: 'green' },
+            { name: 'app.module.ts', color: 'red' },
           ],
         },
         {
@@ -76,26 +77,42 @@ export class AppComponent {
 
   handleContextMenu(action: ContextMenuAction) {
     if (action[0] === 'new_directory') {
-      this.create('directory', action[1], this.tree);
+      const filename = window.prompt('name');
+      this.create('directory', filename ?? 'New Directory',  action[1], this.tree);
     } else if (action[0] === 'new_file') {
-      this.create('file', action[1], this.tree);
+      const filename = window.prompt('name');
+      this.create('file', filename ?? 'New File', action[1], this.tree);
     } else if (action[0] === 'delete_file') {
       this.remove(action[1], this.tree);
     } else if (action[0] === 'rename_file') {
-      this.rename(action[1], this.tree);
+      const filename = window.prompt('rename');
+      this.rename(action[1], filename ?? 'Renamed File', this.tree);
     }
   }
 
-  rename(path: string, localTree: MonacoTreeElement[]) {
+  handleDragDrop(event: DragAndDropEvent) {
+    const file = this.find(event.sourceFile, this.tree);
+    if (!file) return;
+    let destination = this.find(event.destinationFile, this.tree);
+    if(destination?.content === undefined) destination = this.find(event.destinationFile.split('/').slice(0, -1).join('/'), this.tree);
+    if(destination?.content) {
+      this.remove(event.sourceFile, this.tree);
+      destination.content.push(file as MonacoTreeElement);
+    } else {
+      this.remove(event.sourceFile, this.tree);
+      this.tree.push(file as MonacoTreeElement);
+    }
+  }
+
+  rename(path: string, filename: string, localTree: MonacoTreeElement[]) {
     const spited = path.split('/');
     if (spited.length === 1) {
       const file = localTree.find((el) => el.name == path);
-      const filename = window.prompt('rename');
       if (filename && file) file.name = filename;
     } else {
       const file = localTree.find((el) => el.name == spited[0]);
       if (!file || !file.content) return;
-      this.rename(spited.slice(1).join('/'), file?.content);
+      this.rename(spited.slice(1).join('/'), filename, file?.content);
     }
   }
 
@@ -113,11 +130,11 @@ export class AppComponent {
 
   create(
     type: 'directory' | 'file',
+    filename: string,
     path: string,
     localTree: MonacoTreeElement[]
   ) {
     const spited = path.split('/');
-    const filename = window.prompt('name');
     if (!filename) return;
     if (spited.length === 1) {
       const file = localTree.find((el) => el.name == path);
@@ -136,7 +153,18 @@ export class AppComponent {
     } else {
       const file = localTree.find((el) => el.name == spited[0]);
       if (!file || !file.content) return;
-      this.create(type, spited.slice(1).join('/'), file?.content);
+      this.create(type, filename, spited.slice(1).join('/'), file?.content);
+    }
+  }
+
+  find(path: string, localTree: MonacoTreeElement[]): MonacoTreeElement | undefined {
+    const spited = path.split('/');
+    if (spited.length === 1) {
+      return localTree.find((el) => el.name == path);
+    } else {
+      const file = localTree.find((el) => el.name == spited[0]);
+      if (!file || !file.content) return;
+      return this.find(spited.slice(1).join('/'), file?.content);
     }
   }
 }

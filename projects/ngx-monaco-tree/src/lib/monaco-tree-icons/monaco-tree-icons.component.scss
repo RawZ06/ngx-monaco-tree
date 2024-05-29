@@ -1,0 +1,20 @@
+.monaco-tree-icons {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+
+  .monaco-tree-icon {
+    cursor: pointer;
+    display: flex;
+    transition: color 0.3s;
+    padding: 3px;
+  }
+
+  &.vs-dark > .monaco-tree-icon:hover {
+    background: #2a2d2e;
+  }
+
+  &.vs-light > .monaco-tree-icon:hover {
+    background: #e8e8e8;
+  }
+}
