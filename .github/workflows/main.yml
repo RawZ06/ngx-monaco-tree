@@ -28,7 +28,13 @@ jobs:
       - name: Increment version and publish
         run: |
           cd projects/ngx-monaco-tree
-          npm version patch -m "Upgrade to %s for reasons"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          npm version minor -m "v%s"
+          VERSION=$(node -p "require('./package.json').version")
+          git tag ${VERSION}
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
 #          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
