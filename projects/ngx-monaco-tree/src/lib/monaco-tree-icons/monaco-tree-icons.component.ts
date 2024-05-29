@@ -12,19 +12,19 @@ import {NgIf} from "@angular/common";
 })
 export class MonacoTreeIconsComponent {
   @Input() theme: 'vs-dark'|'vs-light' = 'vs-dark';
-  @Output() onNewFile = new EventEmitter<void>();
-  @Output() onNewDirectory = new EventEmitter<void>();
-  @Output() onCollapseAll = new EventEmitter<void>();
+  @Output() newFile = new EventEmitter<void>();
+  @Output() newDirectory = new EventEmitter<void>();
+  @Output() collapseAll = new EventEmitter<void>();
 
   handleNewFile() {
-    this.onNewFile.emit();
+    this.newFile.emit();
   }
 
   handleNewDirectory() {
-    this.onNewDirectory.emit();
+    this.newDirectory.emit();
   }
 
   handleCollapseAll() {
-    this.onCollapseAll.emit();
+    this.collapseAll.emit();
   }
 }

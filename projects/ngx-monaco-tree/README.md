@@ -9,13 +9,15 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 ## Changelog
 
 ### Current
+- Migrate to Angular 17
 - Add color to files
 - Add highlight on selected file or folder
 - Add buttons to create file or folder, and collapse all folders
+- Drag & Drop 
 
-### 15.2.0 (bad version use 17.1.0)
-- Migrate to Angular 17
+### 15.2.0
 - Migrate from yarn to pnpm
+- Create a project with Angular 17 to test the compatibility
 - Passing to standalone components
 - CI/CD with Github Actions
 
@@ -177,6 +179,7 @@ List of events
 |--|--|--|
 | clickFile | path: string | callback to invoke when file or folder is clicked 
 | clickContextMenu | action: ContextMenuAction | callback to invoke when element in context menu is clicked
+| dragDropFile | action: DragAndDropEvent | callback to invoke when file or folder is dragged and dropped
 
 Note :
 

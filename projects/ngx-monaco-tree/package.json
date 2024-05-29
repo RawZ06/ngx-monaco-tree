@@ -23,8 +23,9 @@
 		"visual studio code"
 	],
 	"peerDependencies": {
-		"@angular/common": "^15.0.4",
-		"@angular/core": "^15.0.4",
+		"@angular/common": "^17.3.0",
+		"@angular/core": "^17.3.0",
+		"@angular/cdk": "^17.3.0",
 		"@vscode/codicons": "^0.0.32"
 	},
 	"dependencies": {

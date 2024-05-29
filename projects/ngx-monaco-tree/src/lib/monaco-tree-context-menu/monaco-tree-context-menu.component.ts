@@ -20,7 +20,7 @@ export class MonacoTreeContextMenuComponent {
 	constructor(private eRef: ElementRef) {}
 
 	@HostListener('document:click', ['$event'])
-	clickout(event: MouseEvent) {
+	clickOut(event: MouseEvent) {
 		if(!this.eRef.nativeElement.contains(event.target)) {
 			this.top = -1000;
 			this.left = -1000;

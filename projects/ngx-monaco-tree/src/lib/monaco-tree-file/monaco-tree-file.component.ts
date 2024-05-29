@@ -7,9 +7,11 @@ import {
 	ContextMenuElementSeparator,
 	ContextMenuElementText
 } from "../monaco-tree-context-menu/monaco-tree-context-menu.type";
-import {ContextMenuAction} from "./monaco-tree-file.type";
+import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file.type";
 import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco-tree-context-menu.component";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {DragDropModule, CdkDragDrop, CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
+
 
 function getAbsolutePosition(element: any) {
 	const r = { x: element.offsetLeft, y: element.offsetTop };
@@ -24,7 +26,7 @@ function getAbsolutePosition(element: any) {
 @Component({
   selector: 'monaco-tree-file',
   standalone: true,
-  imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, NgStyle],
+  imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, DragDropModule, NgStyle, CdkDrag, CdkDrag, CdkDropList],
   templateUrl: './monaco-tree-file.component.html',
   styleUrls: ['./monaco-tree-file.component.scss']
 })
@@ -40,6 +42,7 @@ export class MonacoTreeFileComponent {
 
 	@Output() clickFile = new EventEmitter<string>();
 	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
+  @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
 
 	open = false;
 	position: [number, number]|undefined = undefined;
@@ -158,4 +161,23 @@ export class MonacoTreeFileComponent {
     }
   }
 
+  drop($event: CdkDragDrop<any>) {
+    const file = $event.item.data;
+    //Find the container where the file is dropped (thank copilot)
+    const containers = document.querySelectorAll('.monaco-tree-file-container');
+    let targetContainer: Element|null = null;
+    for (const container of Array.from(containers)) {
+      const boundingRect = container.getBoundingClientRect();
+      if ($event.dropPoint.x >= boundingRect.left && $event.dropPoint.x <= boundingRect.right &&
+        $event.dropPoint.y >= boundingRect.top && $event.dropPoint.y <= boundingRect.bottom) {
+        targetContainer = container;
+      }
+    }
+
+    if (targetContainer) {
+      this.dragDropFile.emit({sourceFile: file, destinationFile: targetContainer.getAttribute('ng-reflect-path') ?? '/'});
+    } else {
+      this.dragDropFile.emit({sourceFile: file, destinationFile: '/'});
+    }
+  }
 }
