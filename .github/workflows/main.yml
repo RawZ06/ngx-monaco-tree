@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm i -g pnpm
-          pnpm ci
+          pnpm install
 
       - name: Increment version
         if: github.ref == 'refs/heads/master'
