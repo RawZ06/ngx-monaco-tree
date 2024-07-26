@@ -17,15 +17,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://registry.npmjs.org/'
-      - run: npm install -g pnpm
-      - run: pnpm install
-      - run: pnpm build ngx-monaco-tree
-      - name: Increment version and publish
+
+      - name: Install dependencies
+        run: |
+          npm i -g pnpm
+          pnpm install
+
+      - name: Increment version
         if: github.ref == 'refs/heads/master'
         run: |
           cd projects/ngx-monaco-tree
@@ -39,6 +43,15 @@ jobs:
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+
+      - name: Build project
+        run: pnpm run build ngx-monaco-tree
+
+      - name: Publish NPM package
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd dist/ngx-monaco-tree
           npm publish --access public
+
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
