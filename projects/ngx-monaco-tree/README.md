@@ -11,6 +11,9 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 ## Changelog
 
 ### Current
+- Bug fix publish directory (thank to DustdevDM)
+
+### 17.1.0
 - Migrate to Angular 17
 - Add color to files
 - Add highlight on selected file or folder
