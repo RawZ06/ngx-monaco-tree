@@ -30,7 +30,7 @@ function getAbsolutePosition(element: any) {
   templateUrl: './monaco-tree-file.component.html',
   styleUrls: ['./monaco-tree-file.component.scss']
 })
-export class MonacoTreeFileComponent implements OnChanges {
+export class MonacoTreeFileComponent implements OnInit {
 	@Input() name = '';
   @Input() path = '';
   @Input() color?: string|null|undefined = '';
@@ -49,6 +49,13 @@ export class MonacoTreeFileComponent implements OnChanges {
 
 
 	constructor(private eRef: ElementRef) {
+	}
+
+
+	ngOnInit(): void {
+		if (!!this.current && this.current.startsWith(this.path) && !this.open) {
+      		this.toggle();
+    	}
 	}
 
 	contextMenu: Array<ContextMenuElementSeparator|ContextMenuElementText> = [
@@ -178,12 +185,6 @@ export class MonacoTreeFileComponent implements OnChanges {
       this.dragDropFile.emit({sourceFile: file, destinationFile: targetContainer.getAttribute('ng-reflect-path') ?? '/'});
     } else {
       this.dragDropFile.emit({sourceFile: file, destinationFile: '/'});
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['current'] && !!this.current && this.current.startsWith(this.path) && !this.open) {
-      this.toggle();
     }
   }
 }
