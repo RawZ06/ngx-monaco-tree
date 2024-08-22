@@ -8,6 +8,7 @@
 <monaco-tree
   [theme]="dark ? 'vs-dark' : 'vs-light'"
   [tree]="tree"
+  [currentFile]="currentFile"
   (clickFile)="currentFile = $event"
   (dragDropFile)="handleDragDrop($event)"
   (clickContextMenu)="handleContextMenu($event)"

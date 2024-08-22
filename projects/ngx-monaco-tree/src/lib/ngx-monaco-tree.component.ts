@@ -30,7 +30,7 @@ export class NgxMonacoTreeComponent {
 	@Output() clickContextMenu = new EventEmitter<ContextMenuAction>();
   @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
 
-  currentFile: string|null = null;
+  @Input() currentFile: string|null = null;
 
 	handleClickFile(path: string) {
 		this.clickFile.emit(path);
