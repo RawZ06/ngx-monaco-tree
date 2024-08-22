@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -30,7 +30,7 @@ function getAbsolutePosition(element: any) {
   templateUrl: './monaco-tree-file.component.html',
   styleUrls: ['./monaco-tree-file.component.scss']
 })
-export class MonacoTreeFileComponent {
+export class MonacoTreeFileComponent implements OnChanges {
 	@Input() name = '';
   @Input() path = '';
   @Input() color?: string|null|undefined = '';
@@ -178,6 +178,12 @@ export class MonacoTreeFileComponent {
       this.dragDropFile.emit({sourceFile: file, destinationFile: targetContainer.getAttribute('ng-reflect-path') ?? '/'});
     } else {
       this.dragDropFile.emit({sourceFile: file, destinationFile: '/'});
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['current'] && !!this.current && this.current.startsWith(this.path) && !this.open) {
+      this.toggle();
     }
   }
 }

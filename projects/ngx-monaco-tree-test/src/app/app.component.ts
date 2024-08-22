@@ -14,7 +14,7 @@ import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-fil
 })
 export class AppComponent {
   dark = true;
-  currentFile = '';
+  currentFile = 'src/app/app.component.html';
   tree = [
     {
       name: '.vscode',
