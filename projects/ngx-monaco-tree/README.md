@@ -11,6 +11,9 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 ## Changelog
 
 ### Current
+- Add default value (thank to matthieu-crouzet)
+
+### 17.3.0
 - Bug fix publish directory (thank to DustdevDM)
 
 ### 17.1.0
@@ -177,6 +180,7 @@ List of arguments
 | theme   | `vs-dark` / `vs-light` | `vs-dark` | Theme light or dark |
 | height   | string | `500px` | Height of MonacoTree |
 | width   | string | `300px` | Width of MonacoTree |
+| currentFile | string | `` | Default file opened |
 
 List of events
 
@@ -208,6 +212,11 @@ type ContextMenuAction = ['new_file'|'new_directory'|'delete_file'|'rename_file'
 [vscode](https://github.com/microsoft/vscode)
 [vscode-material-icon-theme](https://github.com/PKief/vscode-material-icon-theme)
 [monaco-tree](https://github.com/BlueMagnificent/monaco-tree)
+
+## Acknowledgments
+
+- matthieu-crouzet
+- DustdevDM
 
 ## License
 
