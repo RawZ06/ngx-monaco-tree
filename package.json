@@ -5,6 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:app": "ng build ngx-monaco-tree",
+    "watch:app": "ng build ngx-monaco-tree --watch --configuration development",
+    "build:test": "ng build ngx-monaco-tree-test",
+    "watch:test": "ng build ngx-monaco-tree-test --watch --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
