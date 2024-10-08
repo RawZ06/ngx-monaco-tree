@@ -13,7 +13,7 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 ### Current
 - Update dependencies
 
-### 18.0.0
+### 18.1.0
 - Upgrade to Angular 18
 
 ### 17.5.0
