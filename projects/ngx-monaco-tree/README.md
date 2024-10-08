@@ -10,7 +10,10 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 
 ## Changelog
 
-### Current (18)
+### Current
+- Update dependencies
+
+### 18.1.0
 - Upgrade to Angular 18
 
 ### 17.5.0
@@ -59,7 +62,7 @@ Stackblitz : [ngx-monaco-tree-demo](https://stackblitz.com/fork/ngx-monaco-tree-
 
 ## Installation
 
-Available on Angular 13, 14, 15, 17 or highter
+Available on Angular ~~13, 14, 15,~~ 17, 18 or highter
 
 Install it
 ```bash
@@ -68,6 +71,10 @@ npm i --save ngx-monaco-tree @vscode/codicons
 
 ```bash
 yarn add ngx-monaco-tree @vscode/codicons
+```
+
+```bash
+pnpm add ngx-monaco-tree @vscode/codicons
 ```
 
 Edit your angular.json to add icons
@@ -204,10 +211,6 @@ type MonacoTreeElement = {
 
 type ContextMenuAction = ['new_file'|'new_directory'|'delete_file'|'rename_file', string];
 ```
-
-## Future features
-
-- Drag & Drop
 
 ## Credits
 
