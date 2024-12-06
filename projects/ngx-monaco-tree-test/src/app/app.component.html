@@ -4,6 +4,7 @@
     <input [(ngModel)]="dark" type="checkbox" />
     <span class="slider round"></span>
   </label>
+  <button type="button" (click)="changeCurrentFile()">Change current file</button>
 </div>
 <monaco-tree
   [theme]="dark ? 'vs-dark' : 'vs-light'"
