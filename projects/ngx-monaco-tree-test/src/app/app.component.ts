@@ -75,6 +75,12 @@ export class AppComponent {
     },
   ];
 
+  changeCurrentFile() {
+    this.currentFile = this.currentFile === 'src/environments/environment.ts'
+      ? 'src/app/app.component.html'
+      : 'src/environments/environment.ts';
+  }
+
   handleContextMenu(action: ContextMenuAction) {
     if (action[0] === 'new_directory') {
       const filename = window.prompt('name');
