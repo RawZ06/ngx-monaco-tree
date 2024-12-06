@@ -63,3 +63,17 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.form > button {
+  background-color: #2196f3;
+  color: white;
+  align-self: stretch;
+  border: none;
+  border-radius: 34px;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.form > button:hover {
+  background-color: #1a74be;
+}

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -30,7 +30,7 @@ function getAbsolutePosition(element: any) {
   templateUrl: './monaco-tree-file.component.html',
   styleUrls: ['./monaco-tree-file.component.scss']
 })
-export class MonacoTreeFileComponent implements OnInit {
+export class MonacoTreeFileComponent implements OnChanges {
 	@Input() name = '';
   @Input() path = '';
   @Input() color?: string|null|undefined = '';
@@ -51,11 +51,16 @@ export class MonacoTreeFileComponent implements OnInit {
 	constructor(private eRef: ElementRef) {
 	}
 
-
-	ngOnInit(): void {
-		if (!!this.current && this.current.startsWith(this.path) && !this.open) {
-      		this.toggle();
-    	}
+	ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['current']
+      && !!this.current
+      && this.current.startsWith(this.path)
+      && !this.open
+      && this.current !== this.path
+    ) {
+      this.toggle(false);
+    }
 	}
 
 	contextMenu: Array<ContextMenuElementSeparator|ContextMenuElementText> = [
@@ -95,10 +100,10 @@ export class MonacoTreeFileComponent implements OnInit {
 				return files[this.name as keyof typeof files];
 
 			} else {
-				let splited = this.name.split('.')
-				while(splited.length > 0) {
-					splited = splited.slice(1)
-					const ext = splited.join('.')
+				let splitted = this.name.split('.')
+				while(splitted.length > 0) {
+					splitted = splitted.slice(1)
+					const ext = splitted.join('.')
 					if(ext && Object.keys(extensions).includes(ext)) {
 						return extensions[ext as keyof typeof extensions];
 					}
@@ -109,9 +114,11 @@ export class MonacoTreeFileComponent implements OnInit {
 		}
 	}
 
-	toggle() {
+	toggle(shouldEmit = true) {
 		this.open = !this.open;
-		this.clickFile.emit(this.name)
+    if (shouldEmit) {
+		  this.clickFile.emit(this.name)
+    }
 	}
 
 	get style() {
