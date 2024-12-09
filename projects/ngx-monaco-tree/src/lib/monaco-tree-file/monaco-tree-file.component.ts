@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, viewChildren} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -42,6 +42,8 @@ export class MonacoTreeFileComponent implements OnChanges {
 	@Output() clickFile = new EventEmitter<string>();
 	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
   @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
+
+  private children = viewChildren(MonacoTreeFileComponent);
 
 	open = false;
 	position: [number, number]|undefined = undefined;
@@ -153,6 +155,11 @@ export class MonacoTreeFileComponent implements OnChanges {
 	handleRightClick(event: ContextMenuAction) {
 		this.contextMenuClick.emit([event[0], this.name + '/' + event[1]]);
 	}
+
+  collapseAll() {
+    this.children().forEach((child) => child.collapseAll());
+    this.open = false;
+  }
 
 	@HostListener('document:contextmenu', ['$event'])
 	clickOut(event: MouseEvent) {

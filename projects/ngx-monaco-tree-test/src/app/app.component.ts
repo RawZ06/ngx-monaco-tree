@@ -146,9 +146,9 @@ export class AppComponent {
     path: string,
     localTree: MonacoTreeElement[]
   ) {
-    const spited = path.split('/');
+    const splitted = path.split('/');
     if (!filename) return;
-    if (spited.length === 1) {
+    if (splitted.length === 1) {
       const file = localTree.find((el) => el.name == path);
       if (!file) return;
       else if (file.content === undefined) {
@@ -163,9 +163,9 @@ export class AppComponent {
         });
       }
     } else {
-      const file = localTree.find((el) => el.name == spited[0]);
+      const file = localTree.find((el) => el.name == splitted[0]);
       if (!file || !file.content) return;
-      this.create(type, filename, spited.slice(1).join('/'), file?.content);
+      this.create(type, filename, splitted.slice(1).join('/'), file?.content);
     }
   }
 
