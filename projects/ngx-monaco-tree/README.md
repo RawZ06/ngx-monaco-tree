@@ -9,44 +9,7 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 <img width="387" alt="Screenshot 2022-02-06 at 21 57 31" src="https://user-images.githubusercontent.com/44646690/152701329-f53622ee-d28e-4019-ac70-ae551d36560f.png">
 
 ## Changelog
-
-### Current
-- Update dependencies
-
-### 18.1.0
-- Upgrade to Angular 18
-
-### 17.5.0
-- Add default value (thank to matthieu-crouzet)
-
-### 17.3.0
-- Bug fix publish directory (thank to DustdevDM)
-
-### 17.1.0
-- Migrate to Angular 17
-- Add color to files
-- Add highlight on selected file or folder
-- Add buttons to create file or folder, and collapse all folders
-- Drag & Drop 
-
-### 15.2.0
-- Migrate from yarn to pnpm
-- Create a project with Angular 17 to test the compatibility
-- Passing to standalone components
-- CI/CD with Github Actions
-
-### 15.1.1
-- Add demo on stackblitz in README
-
-### 15.1.0
-- Fix theme in context menu
-
-### 15.0.0
-- Upgrade to Angular 15
-
-### 14.0.0
-- Upgrade to Angular 14
-
+See CHANGELOG.md
 
 ## Features
 
