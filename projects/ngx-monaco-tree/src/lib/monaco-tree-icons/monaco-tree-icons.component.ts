@@ -2,13 +2,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'monaco-tree-icons',
-  standalone: true,
-  imports: [
-    NgIf
-  ],
-  templateUrl: './monaco-tree-icons.component.html',
-  styleUrl: './monaco-tree-icons.component.scss'
+    selector: 'monaco-tree-icons',
+    templateUrl: './monaco-tree-icons.component.html',
+    styleUrl: './monaco-tree-icons.component.scss'
 })
 export class MonacoTreeIconsComponent {
   @Input() theme: 'vs-dark'|'vs-light' = 'vs-dark';

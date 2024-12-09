@@ -7,16 +7,15 @@ import {MonacoTreeIconsComponent} from "./monaco-tree-icons/monaco-tree-icons.co
 import {CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'monaco-tree',
-  standalone: true,
-  imports: [MonacoTreeFileComponent, MonacoTreeIconsComponent, DragDropModule, NgForOf, CdkDropList],
-	template: `
+    selector: 'monaco-tree',
+    imports: [MonacoTreeFileComponent, MonacoTreeIconsComponent, DragDropModule, NgForOf, CdkDropList],
+    template: `
     <div [style]="'width:' + width + ';height:' + height" [class]="'monaco-tree ' + theme">
         <monaco-tree-icons [theme]="theme" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
         <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of tree" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
     </div>
 	`,
-	styleUrls: ['./ngx-monaco-tree.component.scss']
+    styleUrls: ['./ngx-monaco-tree.component.scss']
 })
 export class NgxMonacoTreeComponent {
 

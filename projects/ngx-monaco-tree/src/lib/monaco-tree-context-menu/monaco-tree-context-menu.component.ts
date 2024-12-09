@@ -3,11 +3,10 @@ import {ContextMenuElementSeparator, ContextMenuElementText} from "./monaco-tree
 import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
-	selector: 'monaco-tree-context-menu',
-  standalone: true,
-  imports: [NgIf, NgForOf],
-	templateUrl: './monaco-tree-context-menu.component.html',
-	styleUrls: ['./monaco-tree-context-menu.component.scss']
+    selector: 'monaco-tree-context-menu',
+    imports: [NgIf, NgForOf],
+    templateUrl: './monaco-tree-context-menu.component.html',
+    styleUrls: ['./monaco-tree-context-menu.component.scss']
 })
 export class MonacoTreeContextMenuComponent {
 	@Input() top: number | undefined;
