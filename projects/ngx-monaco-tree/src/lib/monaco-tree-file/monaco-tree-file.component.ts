@@ -23,11 +23,10 @@ function getAbsolutePosition(element: any) {
 };
 
 @Component({
-  selector: 'monaco-tree-file',
-  standalone: true,
-  imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, DragDropModule, NgStyle, CdkDrag, CdkDrag, CdkDropList],
-  templateUrl: './monaco-tree-file.component.html',
-  styleUrls: ['./monaco-tree-file.component.scss']
+    selector: 'monaco-tree-file',
+    imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, DragDropModule, NgStyle, CdkDrag, CdkDrag, CdkDropList],
+    templateUrl: './monaco-tree-file.component.html',
+    styleUrls: ['./monaco-tree-file.component.scss']
 })
 export class MonacoTreeFileComponent implements OnChanges {
 	@Input() name = '';

@@ -8,11 +8,10 @@ import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-fil
 const TOO_MANY_FILES_IN_FOLDER = 200;
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  imports: [CommonModule, FormsModule, NgxMonacoTreeComponent],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    imports: [CommonModule, FormsModule, NgxMonacoTreeComponent]
 })
 export class AppComponent {
   dark = true;
