@@ -5,6 +5,8 @@ import {CommonModule} from "@angular/common";
 import {NgxMonacoTreeComponent} from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
 import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
+const TOO_MANY_FILES_IN_FOLDER = 200;
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -45,6 +47,10 @@ export class AppComponent {
           ],
         },
         {
+          name: 'folder-with-too-many-files',
+          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts`}))
+        },
+        {
           name: 'favicon.ico',
         },
         {
@@ -76,9 +82,9 @@ export class AppComponent {
   ];
 
   changeCurrentFile() {
-    this.currentFile = this.currentFile === 'src/environments/environment.ts'
+    this.currentFile = this.currentFile === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
       ? 'src/app/app.component.html'
-      : 'src/environments/environment.ts';
+      : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`;
   }
 
   handleContextMenu(action: ContextMenuAction) {
