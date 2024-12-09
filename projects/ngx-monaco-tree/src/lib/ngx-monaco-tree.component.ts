@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, viewChildren } from '@angular/core';
 import { MonacoTreeElement } from './ngx-monaco-tree.type';
 import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file/monaco-tree-file.type";
 import {MonacoTreeFileComponent} from "./monaco-tree-file/monaco-tree-file.component";
@@ -32,6 +32,8 @@ export class NgxMonacoTreeComponent {
 
   @Input() currentFile: string|null = null;
 
+  private children = viewChildren(MonacoTreeFileComponent);
+
 	handleClickFile(path: string) {
 		this.clickFile.emit(path);
     this.currentFile = path;
@@ -54,7 +56,6 @@ export class NgxMonacoTreeComponent {
   }
 
   handleCollapseAll() {
-    const tree = JSON.parse(JSON.stringify(this.tree));
-    this.tree = tree;
+    this.children().forEach((child) => child.collapseAll());
   }
 }

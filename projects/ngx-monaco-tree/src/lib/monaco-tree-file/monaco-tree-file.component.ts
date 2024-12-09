@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, viewChildren} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -11,7 +11,6 @@ import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file.type";
 import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco-tree-context-menu.component";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {DragDropModule, CdkDragDrop, CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
-
 
 function getAbsolutePosition(element: any) {
 	const r = { x: element.offsetLeft, y: element.offsetTop };
@@ -44,6 +43,8 @@ export class MonacoTreeFileComponent implements OnChanges {
 	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
   @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
 
+  private children = viewChildren(MonacoTreeFileComponent);
+
 	open = false;
 	position: [number, number]|undefined = undefined;
 
@@ -56,10 +57,18 @@ export class MonacoTreeFileComponent implements OnChanges {
       changes['current']
       && !!this.current
       && this.current.startsWith(this.path)
-      && !this.open
-      && this.current !== this.path
     ) {
-      this.toggle(false);
+      if (!this.open && this.current !== this.path) {
+        this.toggle(false);
+      }
+      if (this.current === this.path) {
+        // Needed as `scrollIntoViewIfNeeded` is not supported on Firefox
+        if (this.eRef.nativeElement.scrollIntoViewIfNeeded) {
+          this.eRef.nativeElement.scrollIntoViewIfNeeded();
+        } else {
+          this.eRef.nativeElement.scrollIntoView();
+        }
+      }
     }
 	}
 
@@ -146,6 +155,11 @@ export class MonacoTreeFileComponent implements OnChanges {
 	handleRightClick(event: ContextMenuAction) {
 		this.contextMenuClick.emit([event[0], this.name + '/' + event[1]]);
 	}
+
+  collapseAll() {
+    this.children().forEach((child) => child.collapseAll());
+    this.open = false;
+  }
 
 	@HostListener('document:contextmenu', ['$event'])
 	clickOut(event: MouseEvent) {
