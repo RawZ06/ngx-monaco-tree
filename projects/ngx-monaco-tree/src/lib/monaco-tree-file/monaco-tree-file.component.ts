@@ -12,7 +12,6 @@ import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {DragDropModule, CdkDragDrop, CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 
-
 function getAbsolutePosition(element: any) {
 	const r = { x: element.offsetLeft, y: element.offsetTop };
 	if (element.offsetParent) {
@@ -56,10 +55,18 @@ export class MonacoTreeFileComponent implements OnChanges {
       changes['current']
       && !!this.current
       && this.current.startsWith(this.path)
-      && !this.open
-      && this.current !== this.path
     ) {
-      this.toggle(false);
+      if (!this.open && this.current !== this.path) {
+        this.toggle(false);
+      }
+      if (this.current === this.path) {
+        // Needed as `scrollIntoViewIfNeeded` is not supported on Firefox
+        if (this.eRef.nativeElement.scrollIntoViewIfNeeded) {
+          this.eRef.nativeElement.scrollIntoViewIfNeeded();
+        } else {
+          this.eRef.nativeElement.scrollIntoView();
+        }
+      }
     }
 	}
 
