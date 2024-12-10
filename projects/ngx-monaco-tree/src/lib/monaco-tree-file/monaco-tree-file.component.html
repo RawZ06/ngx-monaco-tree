@@ -1,12 +1,12 @@
-<div cdkDrag [cdkDragData]="this.path" (cdkDragDropped)="drop($event)" (contextmenu)="handleRightClickFile($event)" (click)="toggle()" [class]="'monaco-tree-row' + (hide ? ' hide ' : ' ') + theme + (isActive ? ' active ' : ' ')">
+<div cdkDrag [cdkDragData]="this.path()" (cdkDragDropped)="drop($event)" (contextmenu)="handleRightClickFile($event)" (click)="toggle()" [class]="'monaco-tree-row' + (hide() ? ' hide ' : ' ') + theme() + (isActive ? ' active ' : ' ')">
   <span [style]="style"></span>
   @if (folder) {
     <i [class]="'monaco-tree-arrow codicon codicon-chevron-down' + (open ? ' open' : '')"></i>
   }
   <img [src]="'assets/icons/'+ icon +'.svg'" class="monaco-tree-icon"/>
-  <div class="monaco-tree-name" [ngStyle]="{color: colorStyle}">{{name}}</div>
+  <div class="monaco-tree-name" [ngStyle]="{color: colorStyle}">{{name()}}</div>
 </div>
-<monaco-tree-context-menu [theme]="theme" [elements]="contextMenu" [top]="position ? position[1] : undefined" [left]="position ? position[0] : undefined"></monaco-tree-context-menu>
-@for (row of content; track row.name) {
-  <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="this.path" (contextMenuClick)="handleRightClick($event)" (clickFile)="handleClickFile($event)" [name]="row.name" [path]="path + '/' + row.name" [content]="row.content" [color]="row.color" [depth]="depth+1" [hide]="!open || hide" [theme]="theme" [current]="current"></monaco-tree-file>
+<monaco-tree-context-menu [theme]="theme()" [elements]="contextMenu" [top]="position ? position[1] : undefined" [left]="position ? position[0] : undefined"></monaco-tree-context-menu>
+@for (row of content(); track row.name) {
+  <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="this.path()" (contextMenuClick)="handleRightClick($event)" (clickFile)="handleClickFile($event)" [name]="row.name" [path]="path() + '/' + row.name" [content]="row.content" [color]="row.color" [depth]="depth()+1" [hide]="!open || hide()" [theme]="theme()" [current]="current()"></monaco-tree-file>
 }
