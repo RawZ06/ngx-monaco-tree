@@ -1,10 +1,9 @@
 import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 import {ContextMenuElementSeparator, ContextMenuElementText} from "./monaco-tree-context-menu.type";
-import {NgForOf, NgIf} from "@angular/common";
+
 
 @Component({
     selector: 'monaco-tree-context-menu',
-    imports: [NgIf, NgForOf],
     templateUrl: './monaco-tree-context-menu.component.html',
     styleUrls: ['./monaco-tree-context-menu.component.scss']
 })

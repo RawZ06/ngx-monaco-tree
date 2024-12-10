@@ -9,7 +9,7 @@ import {
 } from "../monaco-tree-context-menu/monaco-tree-context-menu.type";
 import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file.type";
 import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco-tree-context-menu.component";
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import { NgStyle } from "@angular/common";
 import {DragDropModule, CdkDragDrop, CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
 
 function getAbsolutePosition(element: any) {
@@ -24,7 +24,7 @@ function getAbsolutePosition(element: any) {
 
 @Component({
     selector: 'monaco-tree-file',
-    imports: [NgIf, NgForOf, MonacoTreeContextMenuComponent, DragDropModule, NgStyle, CdkDrag, CdkDrag, CdkDropList],
+    imports: [MonacoTreeContextMenuComponent, DragDropModule, NgStyle, CdkDrag, CdkDrag, CdkDropList],
     templateUrl: './monaco-tree-file.component.html',
     styleUrls: ['./monaco-tree-file.component.scss']
 })

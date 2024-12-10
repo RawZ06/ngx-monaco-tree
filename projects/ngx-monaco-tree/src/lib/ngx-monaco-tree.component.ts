@@ -1,20 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, viewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, Output, viewChildren } from '@angular/core';
 import { MonacoTreeElement } from './ngx-monaco-tree.type';
 import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file/monaco-tree-file.type";
 import {MonacoTreeFileComponent} from "./monaco-tree-file/monaco-tree-file.component";
-import {NgForOf} from "@angular/common";
 import {MonacoTreeIconsComponent} from "./monaco-tree-icons/monaco-tree-icons.component";
 import {CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'monaco-tree',
-    imports: [MonacoTreeFileComponent, MonacoTreeIconsComponent, DragDropModule, NgForOf, CdkDropList],
+    imports: [MonacoTreeFileComponent, MonacoTreeIconsComponent, DragDropModule, CdkDropList],
     template: `
     <div [style]="'width:' + width + ';height:' + height" [class]="'monaco-tree ' + theme">
-        <monaco-tree-icons [theme]="theme" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
-        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of tree" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
+      <monaco-tree-icons [theme]="theme" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
+      @for (row of tree; track row.name) {
+        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
+      }
     </div>
-	`,
+    `,
     styleUrls: ['./ngx-monaco-tree.component.scss']
 })
 export class NgxMonacoTreeComponent {
