@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, input} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 
 
 @Component({
@@ -8,9 +8,9 @@ import {Component, EventEmitter, Output, input} from '@angular/core';
 })
 export class MonacoTreeIconsComponent {
   readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
-  @Output() newFile = new EventEmitter<void>();
-  @Output() newDirectory = new EventEmitter<void>();
-  @Output() collapseAll = new EventEmitter<void>();
+  readonly newFile = output<void>();
+  readonly newDirectory = output<void>();
+  readonly collapseAll = output<void>();
 
   handleNewFile() {
     this.newFile.emit();
