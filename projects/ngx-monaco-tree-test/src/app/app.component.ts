@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { ContextMenuAction, MonacoTreeElement } from 'ngx-monaco-tree';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 
-import {NgxMonacoTreeComponent} from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
-import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
+import { NgxMonacoTreeComponent } from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
+import { DragAndDropEvent } from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
 const TOO_MANY_FILES_IN_FOLDER = 200;
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [FormsModule, NgxMonacoTreeComponent]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [FormsModule, NgxMonacoTreeComponent]
 })
 export class AppComponent {
   dark = true;
@@ -47,7 +47,7 @@ export class AppComponent {
         },
         {
           name: 'folder-with-too-many-files',
-          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts`}))
+          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts` }))
         },
         {
           name: 'favicon.ico',
@@ -89,7 +89,7 @@ export class AppComponent {
   handleContextMenu(action: ContextMenuAction) {
     if (action[0] === 'new_directory') {
       const filename = window.prompt('name');
-      this.create('directory', filename ?? 'New Directory',  action[1], this.tree);
+      this.create('directory', filename ?? 'New Directory', action[1], this.tree);
     } else if (action[0] === 'new_file') {
       const filename = window.prompt('name');
       this.create('file', filename ?? 'New File', action[1], this.tree);
@@ -105,8 +105,8 @@ export class AppComponent {
     const file = this.find(event.sourceFile, this.tree);
     if (!file) return;
     let destination = this.find(event.destinationFile, this.tree);
-    if(destination?.content === undefined) destination = this.find(event.destinationFile.split('/').slice(0, -1).join('/'), this.tree);
-    if(destination?.content) {
+    if (destination?.content === undefined) destination = this.find(event.destinationFile.split('/').slice(0, -1).join('/'), this.tree);
+    if (destination?.content) {
       this.remove(event.sourceFile, this.tree);
       destination.content.push(file as MonacoTreeElement);
     } else {
