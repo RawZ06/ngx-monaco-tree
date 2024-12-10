@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ContextMenuAction, MonacoTreeElement } from 'ngx-monaco-tree';
 import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
+
 import {NgxMonacoTreeComponent} from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
 import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
@@ -11,7 +11,7 @@ const TOO_MANY_FILES_IN_FOLDER = 200;
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    imports: [CommonModule, FormsModule, NgxMonacoTreeComponent]
+    imports: [FormsModule, NgxMonacoTreeComponent]
 })
 export class AppComponent {
   dark = true;
