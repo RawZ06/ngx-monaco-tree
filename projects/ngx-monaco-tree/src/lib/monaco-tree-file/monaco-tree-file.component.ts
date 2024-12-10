@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, OnChanges, Output, SimpleChanges, inject, viewChildren, input} from '@angular/core';
+import {Component, ElementRef, HostListener, OnChanges, SimpleChanges, inject, viewChildren, input, output} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -40,9 +40,9 @@ export class MonacoTreeFileComponent implements OnChanges {
 	readonly hide = input(false);
   readonly current = input<string | null>(null);
 
-	@Output() clickFile = new EventEmitter<string>();
-	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
-  @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
+	readonly clickFile = output<string>();
+	readonly contextMenuClick = output<ContextMenuAction>();
+  readonly dragDropFile = output<DragAndDropEvent>();
 
   private children = viewChildren(MonacoTreeFileComponent);
 

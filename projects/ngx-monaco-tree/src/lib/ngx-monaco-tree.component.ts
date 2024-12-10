@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, viewChildren, input } from '@angular/core';
+import { Component, Input, viewChildren, input, output } from '@angular/core';
 import { MonacoTreeElement } from './ngx-monaco-tree.type';
 import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file/monaco-tree-file.type";
 import {MonacoTreeFileComponent} from "./monaco-tree-file/monaco-tree-file.component";
@@ -26,9 +26,9 @@ export class NgxMonacoTreeComponent {
 	readonly width = input("300px");
 	readonly height = input("500px");
 
-	@Output() clickFile = new EventEmitter<string>();
-	@Output() clickContextMenu = new EventEmitter<ContextMenuAction>();
-  @Output() dragDropFile = new EventEmitter<DragAndDropEvent>();
+	readonly clickFile = output<string>();
+	readonly clickContextMenu = output<ContextMenuAction>();
+  readonly dragDropFile = output<DragAndDropEvent>();
 
   // TODO: Skipped for migration because:
   // Your application code writes to the input. This prevents migration.
