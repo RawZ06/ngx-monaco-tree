@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject, viewChildren} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, OnChanges, Output, SimpleChanges, inject, viewChildren, input} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -31,14 +31,14 @@ function getAbsolutePosition(element: any) {
 export class MonacoTreeFileComponent implements OnChanges {
 	private readonly eRef = inject(ElementRef);
 
-	@Input() name = '';
-  @Input() path = '';
-  @Input() color?: string|null|undefined = '';
-	@Input() content: MonacoTreeElement[]|undefined|null = undefined;
-	@Input() depth = 0;
-	@Input() theme: 'vs-dark'|'vs-light' = 'vs-dark';
-	@Input() hide = false;
-  @Input() current: string|null = null;
+	readonly name = input('');
+  readonly path = input('');
+  readonly color = input<string | null | undefined>('');
+	readonly content = input<MonacoTreeElement[] | null>();
+	readonly depth = input(0);
+	readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
+	readonly hide = input(false);
+  readonly current = input<string | null>(null);
 
 	@Output() clickFile = new EventEmitter<string>();
 	@Output() contextMenuClick = new EventEmitter<ContextMenuAction>();
@@ -50,15 +50,17 @@ export class MonacoTreeFileComponent implements OnChanges {
 	position: [number, number]|undefined = undefined;
 
 	ngOnChanges(changes: SimpleChanges): void {
+    const current = this.current();
+    const path = this.path();
     if (
       changes['current']
-      && !!this.current
-      && this.current.startsWith(this.path)
+      && !!current
+      && current.startsWith(path)
     ) {
-      if (!this.open && this.current !== this.path) {
+      if (!this.open && current !== path) {
         this.toggle(false);
       }
-      if (this.current === this.path) {
+      if (current === path) {
         // Needed as `scrollIntoViewIfNeeded` is not supported on Firefox
         if (this.eRef.nativeElement.scrollIntoViewIfNeeded) {
           this.eRef.nativeElement.scrollIntoViewIfNeeded();
@@ -71,20 +73,20 @@ export class MonacoTreeFileComponent implements OnChanges {
 
 	contextMenu: Array<ContextMenuElementSeparator|ContextMenuElementText> = [
 		{type: "element", name: 'New File', action: () => {
-				this.contextMenuClick.emit(["new_file", this.name])
+				this.contextMenuClick.emit(["new_file", this.name()])
 				this.position = [-1000, -1000];
 			} },
 		{type: "element", name: 'New Directory', action: () => {
-				this.contextMenuClick.emit(["new_directory", this.name])
+				this.contextMenuClick.emit(["new_directory", this.name()])
 				this.position = [-1000, -1000];
 			} },
 		{type: "separator" },
 		{type: "element", name: 'Rename', action: () => {
-				this.contextMenuClick.emit(["rename_file", this.name])
+				this.contextMenuClick.emit(["rename_file", this.name()])
 				this.position = [-1000, -1000];
 			} },
 		{type: "element", name: 'Delete', action: () => {
-				this.contextMenuClick.emit(["delete_file", this.name])
+				this.contextMenuClick.emit(["delete_file", this.name()])
 				this.position = [-1000, -1000];
 			} }
 	]
@@ -92,8 +94,9 @@ export class MonacoTreeFileComponent implements OnChanges {
 
 	get icon() {
 		if(this.folder) {
-			if(Object.keys(folders).includes(this.name)) {
-				const icon = folders[this.name as keyof typeof folders];
+			const name = this.name();
+   if(Object.keys(folders).includes(name)) {
+				const icon = folders[name as keyof typeof folders];
 				if(this.open) return icon + '-open'
 				else return icon;
 			}
@@ -102,11 +105,12 @@ export class MonacoTreeFileComponent implements OnChanges {
 				else return 'folder';
 			}
 		} else {
-			if(Object.keys(files).includes(this.name)) {
-				return files[this.name as keyof typeof files];
+			const name = this.name();
+   if(Object.keys(files).includes(name)) {
+				return files[name as keyof typeof files];
 
 			} else {
-				let splitted = this.name.split('.')
+				let splitted = name.split('.')
 				while(splitted.length > 0) {
 					splitted = splitted.slice(1)
 					const ext = splitted.join('.')
@@ -123,24 +127,25 @@ export class MonacoTreeFileComponent implements OnChanges {
 	toggle(shouldEmit = true) {
 		this.open = !this.open;
     if (shouldEmit) {
-		  this.clickFile.emit(this.name)
+		  this.clickFile.emit(this.name())
     }
 	}
 
 	get style() {
-		return 'margin-left: '+ 10*this.depth +'px'
+		return 'margin-left: '+ 10*this.depth() +'px'
 	}
 
 	get folder() {
-		return this.content !== null && this.content !== undefined
+		const content = this.content();
+  return content !== null && content !== undefined
 	}
 
   get isActive() {
-    return this.current === this.path;
+    return this.current() === this.path();
   }
 
 	handleClickFile(file: string) {
-		this.clickFile.emit(this.name + '/' + file);
+		this.clickFile.emit(this.name() + '/' + file);
 	}
 
 	handleRightClickFile(event: MouseEvent) {
@@ -150,7 +155,7 @@ export class MonacoTreeFileComponent implements OnChanges {
 	}
 
 	handleRightClick(event: ContextMenuAction) {
-		this.contextMenuClick.emit([event[0], this.name + '/' + event[1]]);
+		this.contextMenuClick.emit([event[0], this.name() + '/' + event[1]]);
 	}
 
   collapseAll() {
@@ -166,7 +171,8 @@ export class MonacoTreeFileComponent implements OnChanges {
 	}
 
   get colorStyle() {
-    switch(this.color) {
+    const color = this.color();
+    switch(color) {
       case 'red':
         return '#c74e39'
       case 'yellow':
@@ -176,9 +182,9 @@ export class MonacoTreeFileComponent implements OnChanges {
       case 'gray':
         return '#8c8c8c'
       default:
-        if(this.color?.startsWith("#")) return this.color;
-        else if(this.color) {
-          console.warn("Invalid color ", this.color, " please use red | yellow | green | gray or a valid hex color with #.")
+        if(color?.startsWith("#")) return color;
+        else if(color) {
+          console.warn("Invalid color ", color, " please use red | yellow | green | gray or a valid hex color with #.")
           return null;
         } else {
           return null;

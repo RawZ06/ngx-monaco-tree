@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, inject, input } from '@angular/core';
 import {ContextMenuElementSeparator, ContextMenuElementText} from "./monaco-tree-context-menu.type";
 
 
@@ -10,12 +10,16 @@ import {ContextMenuElementSeparator, ContextMenuElementText} from "./monaco-tree
 export class MonacoTreeContextMenuComponent {
 	private readonly eRef = inject(ElementRef);
 
+	// TODO: Skipped for migration because:
+	// Your application code writes to the input. This prevents migration.
 	@Input() top: number | undefined;
+	// TODO: Skipped for migration because:
+	// Your application code writes to the input. This prevents migration.
 	@Input() left: number | undefined
 
-	@Input() theme: 'vs-dark' | 'vs-light' = 'vs-dark';
+	readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
 
-	@Input() elements: Array<ContextMenuElementSeparator|ContextMenuElementText> = []
+	readonly elements = input<Array<ContextMenuElementSeparator | ContextMenuElementText>>([]);
 
 	@HostListener('document:click', ['$event'])
 	clickOut(event: MouseEvent) {

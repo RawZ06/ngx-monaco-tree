@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Output, input} from '@angular/core';
 
 
 @Component({
@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     styleUrl: './monaco-tree-icons.component.scss'
 })
 export class MonacoTreeIconsComponent {
-  @Input() theme: 'vs-dark'|'vs-light' = 'vs-dark';
+  readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
   @Output() newFile = new EventEmitter<void>();
   @Output() newDirectory = new EventEmitter<void>();
   @Output() collapseAll = new EventEmitter<void>();
