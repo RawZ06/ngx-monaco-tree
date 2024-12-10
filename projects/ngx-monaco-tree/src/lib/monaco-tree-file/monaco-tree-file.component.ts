@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, viewChildren} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, inject, viewChildren} from '@angular/core';
 import { extensions } from '../../utils/extension-icon';
 import { files } from '../../utils/file-icon';
 import { folders } from '../../utils/folder-icon';
@@ -29,6 +29,8 @@ function getAbsolutePosition(element: any) {
     styleUrls: ['./monaco-tree-file.component.scss']
 })
 export class MonacoTreeFileComponent implements OnChanges {
+	private readonly eRef = inject(ElementRef);
+
 	@Input() name = '';
   @Input() path = '';
   @Input() color?: string|null|undefined = '';
@@ -46,10 +48,6 @@ export class MonacoTreeFileComponent implements OnChanges {
 
 	open = false;
 	position: [number, number]|undefined = undefined;
-
-
-	constructor(private eRef: ElementRef) {
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
     if (
