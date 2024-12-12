@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ContextMenuAction, MonacoTreeElement } from 'ngx-monaco-tree';
 import { FormsModule } from "@angular/forms";
 
@@ -14,8 +14,8 @@ const TOO_MANY_FILES_IN_FOLDER = 200;
   imports: [FormsModule, NgxMonacoTreeComponent]
 })
 export class AppComponent {
-  dark = true;
-  currentFile = 'src/app/app.component.html';
+  dark = signal(true);
+  currentFile = signal('src/app/app.component.html');
   tree = [
     {
       name: '.vscode',
@@ -81,9 +81,11 @@ export class AppComponent {
   ];
 
   changeCurrentFile() {
-    this.currentFile = this.currentFile === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
-      ? 'src/app/app.component.html'
-      : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`;
+    this.currentFile.set(
+      this.currentFile() === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
+        ? 'src/app/app.component.html'
+        : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
+    );
   }
 
   handleContextMenu(action: ContextMenuAction) {
