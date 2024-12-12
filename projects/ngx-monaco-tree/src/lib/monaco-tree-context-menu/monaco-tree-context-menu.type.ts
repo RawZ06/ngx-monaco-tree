@@ -1,9 +1,9 @@
 export interface ContextMenuElementSeparator {
-	type: 'separator';
+  type: 'separator';
 }
 
 export interface ContextMenuElementText {
-	type: 'element';
-	action: () => void;
-	name: string;
+  type: 'element';
+  action: () => void;
+  name: string;
 }

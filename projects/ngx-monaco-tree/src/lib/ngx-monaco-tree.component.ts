@@ -1,4 +1,4 @@
-import { Component, Input, viewChildren, input, output } from '@angular/core';
+import { Component, viewChildren, input, output, model } from '@angular/core';
 import { MonacoTreeElement } from './ngx-monaco-tree.type';
 import { ContextMenuAction, DragAndDropEvent } from "./monaco-tree-file/monaco-tree-file.type";
 import { MonacoTreeFileComponent } from "./monaco-tree-file/monaco-tree-file.component";
@@ -12,48 +12,50 @@ import { CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
     <div [style]="'width:' + width() + ';height:' + height()" [class]="'monaco-tree ' + theme()">
       <monaco-tree-icons [theme]="theme()" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
       @for (row of tree(); track row.name) {
-        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree()" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme()" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
+        <monaco-tree-file class="monaco-tree-file-container"
+          (dragDropFile)="dragDropFile.emit($event)"
+          cdkDropList
+          [cdkDropListData]="tree()"
+          (contextMenuClick)="handleClickContextMenu($event)"
+          [theme]="theme()"
+          [name]="row.name"
+          [content]="row.content"
+          [color]="row.color"
+          [(current)]="currentFile">
+        </monaco-tree-file>
       }
     </div>
     `,
   styleUrls: ['./ngx-monaco-tree.component.scss']
 })
 export class NgxMonacoTreeComponent {
+  private readonly children = viewChildren(MonacoTreeFileComponent);
 
   readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
-  readonly tree = input<MonacoTreeElement[]>([]);
-
+  readonly tree = input.required<MonacoTreeElement[]>();
   readonly width = input("300px");
   readonly height = input("500px");
 
-  readonly clickFile = output<string>();
   readonly clickContextMenu = output<ContextMenuAction>();
   readonly dragDropFile = output<DragAndDropEvent>();
 
-  // TODO: Skipped for migration because:
-  // Your application code writes to the input. This prevents migration.
-  @Input() currentFile: string | null = null;
-
-  private children = viewChildren(MonacoTreeFileComponent);
-
-  handleClickFile(path: string) {
-    this.clickFile.emit(path);
-    this.currentFile = path;
-  }
+  readonly currentFile = model<string | null>(null);
 
   handleClickContextMenu(event: ContextMenuAction) {
     this.clickContextMenu.emit(event);
   }
 
   handleNewFile() {
-    if (this.currentFile !== null) {
-      this.clickContextMenu.emit(["new_file", this.currentFile])
+    const currentFile = this.currentFile();
+    if (currentFile !== null) {
+      this.clickContextMenu.emit(["new_file", currentFile])
     }
   }
 
   handleNewDirectory() {
-    if (this.currentFile !== null) {
-      this.clickContextMenu.emit(["new_directory", this.currentFile])
+    const currentFile = this.currentFile();
+    if (currentFile !== null) {
+      this.clickContextMenu.emit(["new_directory", currentFile])
     }
   }
 

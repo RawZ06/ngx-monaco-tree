@@ -1,10 +1,12 @@
+import { NgClass } from '@angular/common';
 import {Component, input, output} from '@angular/core';
 
 
 @Component({
     selector: 'monaco-tree-icons',
     templateUrl: './monaco-tree-icons.component.html',
-    styleUrl: './monaco-tree-icons.component.scss'
+    styleUrl: './monaco-tree-icons.component.scss',
+    imports: [NgClass]
 })
 export class MonacoTreeIconsComponent {
   readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
