@@ -4,9 +4,6 @@ import {NgIf} from "@angular/common";
 @Component({
   selector: 'monaco-tree-icons',
   standalone: true,
-  imports: [
-    NgIf
-  ],
   templateUrl: './monaco-tree-icons.component.html',
   styleUrl: './monaco-tree-icons.component.scss'
 })

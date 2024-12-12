@@ -19,6 +19,9 @@ export class AppComponent {
   currentFile = 'src/app/app.component.html';
   tree = [
     {
+      name: 'package.json',
+    },
+    {
       name: '.vscode',
       content: [{ name: 'settings.json' }],
     },
@@ -48,7 +51,9 @@ export class AppComponent {
         },
         {
           name: 'folder-with-too-many-files',
-          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts`}))
+          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER })
+                        .map((_, index) => ({ name: `file_${index + 1}.ts` }))
+                        .sort(() => 0.5 - Math.random())
         },
         {
           name: 'favicon.ico',
@@ -72,9 +77,6 @@ export class AppComponent {
     },
     {
       name: 'package-lock.json',
-    },
-    {
-      name: 'package.json',
     },
     {
       name: 'tsconfig.json',

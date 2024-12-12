@@ -11,6 +11,7 @@ import {ContextMenuAction, DragAndDropEvent} from "./monaco-tree-file.type";
 import {MonacoTreeContextMenuComponent} from "../monaco-tree-context-menu/monaco-tree-context-menu.component";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {DragDropModule, CdkDragDrop, CdkDrag, CdkDropList} from '@angular/cdk/drag-drop';
+import { sortTreeElement } from '../../utils/tree.helpers';
 
 function getAbsolutePosition(element: any) {
 	const r = { x: element.offsetLeft, y: element.offsetTop };
@@ -47,6 +48,12 @@ export class MonacoTreeFileComponent implements OnChanges {
 
 	open = false;
 	position: [number, number]|undefined = undefined;
+
+
+  // TODO use computed once we use input-signal instead of input-decorator
+  get sortedTree() {
+    return this.content?.slice().sort(sortTreeElement)
+  }
 
 
 	constructor(private eRef: ElementRef) {

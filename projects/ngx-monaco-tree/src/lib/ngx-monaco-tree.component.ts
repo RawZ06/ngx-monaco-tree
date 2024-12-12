@@ -5,6 +5,7 @@ import {MonacoTreeFileComponent} from "./monaco-tree-file/monaco-tree-file.compo
 import {NgForOf} from "@angular/common";
 import {MonacoTreeIconsComponent} from "./monaco-tree-icons/monaco-tree-icons.component";
 import {CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
+import { sortTreeElement } from '../utils/tree.helpers';
 
 @Component({
   selector: 'monaco-tree',
@@ -13,7 +14,7 @@ import {CdkDropList, DragDropModule} from '@angular/cdk/drag-drop';
 	template: `
     <div [style]="'width:' + width + ';height:' + height" [class]="'monaco-tree ' + theme">
         <monaco-tree-icons [theme]="theme" (newDirectory)="handleNewDirectory()" (newFile)="handleNewFile()" (collapseAll)="handleCollapseAll()"></monaco-tree-icons>
-        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of tree" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
+        <monaco-tree-file (dragDropFile)="dragDropFile.emit($event)" class="monaco-tree-file-container" cdkDropList [cdkDropListData]="tree" (contextMenuClick)="handleClickContextMenu($event)" (clickFile)="handleClickFile($event)" [theme]="theme" *ngFor="let row of sortedTree" [name]="row.name" [path]="row.name" [content]="row.content" [color]="row.color" [depth]="0" [hide]="false" [current]="currentFile"></monaco-tree-file>
     </div>
 	`,
 	styleUrls: ['./ngx-monaco-tree.component.scss']
@@ -33,6 +34,11 @@ export class NgxMonacoTreeComponent {
   @Input() currentFile: string|null = null;
 
   private children = viewChildren(MonacoTreeFileComponent);
+
+  // TODO use computed once we use input-signal instead of input-decorator
+  get sortedTree() {
+    return this.tree?.slice().sort(sortTreeElement)
+  }
 
 	handleClickFile(path: string) {
 		this.clickFile.emit(path);
