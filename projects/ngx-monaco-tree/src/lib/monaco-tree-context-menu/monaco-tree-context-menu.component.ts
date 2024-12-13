@@ -12,8 +12,8 @@ import { NgClass } from '@angular/common';
 export class MonacoTreeContextMenuComponent {
   private readonly eRef = inject(ElementRef);
 
-  top = model<number | undefined>(undefined);
-  left = model<number | undefined>(undefined)
+  top = model<number>();
+  left = model<number>()
 
   readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
 

@@ -81,8 +81,8 @@ export class AppComponent {
   ];
 
   changeCurrentFile() {
-    this.currentFile.set(
-      this.currentFile() === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
+    this.currentFile.update((currentFile) =>
+      currentFile === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
         ? 'src/app/app.component.html'
         : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
     );

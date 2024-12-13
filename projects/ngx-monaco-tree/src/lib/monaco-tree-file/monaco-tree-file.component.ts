@@ -42,8 +42,8 @@ export class MonacoTreeFileComponent implements OnChanges {
 
   readonly name = input.required<string>();
   readonly path = input('');
-  readonly color = input<string | undefined>();
-  readonly content = input.required<MonacoTreeElement[] | undefined>();
+  readonly color = input<string>();
+  readonly content = input<MonacoTreeElement[]>();
   readonly depth = input(0);
   readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
 
@@ -186,7 +186,7 @@ export class MonacoTreeFileComponent implements OnChanges {
     const file = $event.item.data;
     // Find the container where the file is dropped (thank copilot)
     const containers = document.querySelectorAll('.monaco-tree-file-container');
-    const targetContainer = Array.from(containers).find((container) => {
+    const targetContainer = Array.from(containers).findLast((container) => {
       const { left, right, bottom, top } = container.getBoundingClientRect();
       const { x, y } = $event.dropPoint;
       return x >= left && x <= right && y >= top && y <= bottom;
