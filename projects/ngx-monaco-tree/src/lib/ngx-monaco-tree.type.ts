@@ -1,5 +1,5 @@
 export type MonacoTreeElement = {
-	name: string;
+  name: string;
   color?: 'red'|'yellow'|'green'|'gray'|string;
-	content?: MonacoTreeElement[]
+  content?: MonacoTreeElement[]
 }
