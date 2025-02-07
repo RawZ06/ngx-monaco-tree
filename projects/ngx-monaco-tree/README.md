@@ -9,7 +9,7 @@ This is a Tree view based on [monaco-editor](https://github.com/microsoft/monaco
 <img width="387" alt="Screenshot 2022-02-06 at 21 57 31" src="https://user-images.githubusercontent.com/44646690/152701329-f53622ee-d28e-4019-ac70-ae551d36560f.png">
 
 ## Changelog
-See CHANGELOG.md
+See [CHANGELOG.md](CHANGELOG.md])
 
 ## Features
 
