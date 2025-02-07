@@ -1,4 +1,4 @@
-<div [class]="'monaco-tree-icons ' + theme">
+<div class="monaco-tree-icons" [ngClass]="theme()">
   <i class="monaco-tree-icon codicon codicon-new-file" (click)="handleNewFile()"></i>
   <i class="monaco-tree-icon codicon codicon-new-folder" (click)="handleNewDirectory()"></i>
   <i class="monaco-tree-icon codicon codicon-collapse-all" (click)="handleCollapseAll()"></i>

@@ -1,29 +1,29 @@
-import {Component, ElementRef, HostListener, Input, OnInit} from '@angular/core';
-import {ContextMenuElementSeparator, ContextMenuElementText} from "./monaco-tree-context-menu.type";
-import {NgForOf, NgIf} from "@angular/common";
+import { Component, ElementRef, HostListener, inject, input, model } from '@angular/core';
+import { ContextMenuElementSeparator, ContextMenuElementText } from "./monaco-tree-context-menu.type";
+import { NgClass } from '@angular/common';
+
 
 @Component({
-	selector: 'monaco-tree-context-menu',
-  standalone: true,
-  imports: [NgIf, NgForOf],
-	templateUrl: './monaco-tree-context-menu.component.html',
-	styleUrls: ['./monaco-tree-context-menu.component.scss']
+  selector: 'monaco-tree-context-menu',
+  imports: [NgClass],
+  templateUrl: './monaco-tree-context-menu.component.html',
+  styleUrls: ['./monaco-tree-context-menu.component.scss']
 })
 export class MonacoTreeContextMenuComponent {
-	@Input() top: number | undefined;
-	@Input() left: number | undefined
+  private readonly eRef = inject(ElementRef);
 
-	@Input() theme: 'vs-dark' | 'vs-light' = 'vs-dark';
+  top = model<number>();
+  left = model<number>()
 
-	@Input() elements: Array<ContextMenuElementSeparator|ContextMenuElementText> = []
+  readonly theme = input<'vs-dark' | 'vs-light'>('vs-dark');
 
-	constructor(private eRef: ElementRef) {}
+  readonly elements = input.required<Array<ContextMenuElementSeparator | ContextMenuElementText>>();
 
-	@HostListener('document:click', ['$event'])
-	clickOut(event: MouseEvent) {
-		if(!this.eRef.nativeElement.contains(event.target)) {
-			this.top = -1000;
-			this.left = -1000;
-		}
-	}
+  @HostListener('document:click', ['$event'])
+  clickOut(event: MouseEvent) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.top.set(-1000);
+      this.left.set(-1000);
+    }
+  }
 }

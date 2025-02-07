@@ -7,11 +7,10 @@
   <button type="button" (click)="changeCurrentFile()">Change current file</button>
 </div>
 <monaco-tree
-  [theme]="dark ? 'vs-dark' : 'vs-light'"
+  [theme]="dark() ? 'vs-dark' : 'vs-light'"
   [tree]="tree"
-  [currentFile]="currentFile"
-  (clickFile)="currentFile = $event"
+  [(currentFile)]="currentFile"
   (dragDropFile)="handleDragDrop($event)"
   (clickContextMenu)="handleContextMenu($event)"
 ></monaco-tree>
-<span>Current file : {{ currentFile }}</span>
+<span>Current file : {{ currentFile() }}</span>
