@@ -5,7 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { NgxMonacoTreeComponent } from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
 import { DragAndDropEvent } from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
-const TOO_MANY_FILES_IN_FOLDER = 200;
+const TOO_MANY_FILES_IN_FOLDER = 10;
 
 @Component({
   selector: 'app-root',
