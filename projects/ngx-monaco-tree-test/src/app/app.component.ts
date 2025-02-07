@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ContextMenuAction, MonacoTreeElement } from 'ngx-monaco-tree';
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {NgxMonacoTreeComponent} from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
-import {DragAndDropEvent} from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
+import { FormsModule } from "@angular/forms";
+
+import { NgxMonacoTreeComponent } from "../../../ngx-monaco-tree/src/lib/ngx-monaco-tree.component";
+import { DragAndDropEvent } from "../../../ngx-monaco-tree/src/lib/monaco-tree-file/monaco-tree-file.type";
 
 const TOO_MANY_FILES_IN_FOLDER = 200;
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [CommonModule, FormsModule, NgxMonacoTreeComponent],
+  imports: [FormsModule, NgxMonacoTreeComponent]
 })
 export class AppComponent {
-  dark = true;
-  currentFile = 'src/app/app.component.html';
+  dark = signal(true);
+  currentFile = signal('src/app/app.component.html');
   tree = [
     {
       name: '.vscode',
@@ -48,7 +47,7 @@ export class AppComponent {
         },
         {
           name: 'folder-with-too-many-files',
-          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts`}))
+          content: Array.from({ length: TOO_MANY_FILES_IN_FOLDER }).map((_, index) => ({ name: `file_${index + 1}.ts` }))
         },
         {
           name: 'favicon.ico',
@@ -82,15 +81,17 @@ export class AppComponent {
   ];
 
   changeCurrentFile() {
-    this.currentFile = this.currentFile === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
-      ? 'src/app/app.component.html'
-      : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`;
+    this.currentFile.update((currentFile) =>
+      currentFile === `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
+        ? 'src/app/app.component.html'
+        : `src/folder-with-too-many-files/file_${TOO_MANY_FILES_IN_FOLDER}.ts`
+    );
   }
 
   handleContextMenu(action: ContextMenuAction) {
     if (action[0] === 'new_directory') {
       const filename = window.prompt('name');
-      this.create('directory', filename ?? 'New Directory',  action[1], this.tree);
+      this.create('directory', filename ?? 'New Directory', action[1], this.tree);
     } else if (action[0] === 'new_file') {
       const filename = window.prompt('name');
       this.create('file', filename ?? 'New File', action[1], this.tree);
@@ -106,8 +107,8 @@ export class AppComponent {
     const file = this.find(event.sourceFile, this.tree);
     if (!file) return;
     let destination = this.find(event.destinationFile, this.tree);
-    if(destination?.content === undefined) destination = this.find(event.destinationFile.split('/').slice(0, -1).join('/'), this.tree);
-    if(destination?.content) {
+    if (destination?.content === undefined) destination = this.find(event.destinationFile.split('/').slice(0, -1).join('/'), this.tree);
+    if (destination?.content) {
       this.remove(event.sourceFile, this.tree);
       destination.content.push(file as MonacoTreeElement);
     } else {
