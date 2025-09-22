@@ -1,6 +1,9 @@
 ## Changelog
 
 ### Current
+- Migrate to Angular 20 (thank to matthieu-crouzet)
+
+### 19.1.0
 - Migrate to Angular 19 (thank to matthieu-crouzet)
 *<p>NOTE: Using signals instead of classic variable angular</p>*
 
