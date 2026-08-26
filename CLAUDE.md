@@ -134,11 +134,13 @@ The library is built using **ng-packagr**, which compiles TypeScript and outputs
 
 ## Angular Version & Dependencies
 
-- **Angular 21.1.0** (recently upgraded from v20)
-- Uses **Angular CDK** for drag-drop functionality
+- **Angular 22.1.3** (recently upgraded from v21)
+- **TypeScript 6.0.3** (required for Angular 22)
+- Uses **Angular CDK 22.1.1** for drag-drop functionality
 - Standalone component API (no NgModule required)
 - CSS uses SCSS
-- VSCode codicons for all icons
+- VSCode codicons (v0.0.45) for all icons
+- Comprehensive test suite with 34+ unit and integration tests
 
 ## Testing the Component
 
@@ -164,14 +166,40 @@ The library is built using **ng-packagr**, which compiles TypeScript and outputs
 - **Pushing**: Only humans can push commits to the repository. The AI will never push.
 - **Commits**: The AI can freely create commits.
 - **Tags**: The CI/CD pipeline (GitHub Actions) automatically creates tags based on version bumps on `master` branch.
-- **Changelog Updates**: Every new version MUST include an update to `CHANGELOG.md` before release.
+- **Changelog Workflow**: Follow semantic versioning - only published versions get numbered sections.
 
-### Steps for a Release
+### CHANGELOG.md Structure
+The CHANGELOG follows this pattern:
+
+```markdown
+### Current
+- Feature added in development
+- Bug fix in development
+
+### 20.1.0
+- Previously published version
+```
+
+**Key Rules:**
+- **"Current" section**: Contains ALL unpublished changes (new features, fixes, breaking changes)
+- **Numbered versions**: Only exist for packages published to npm (e.g., 20.1.0, 21.0.0)
+- **AI Responsibility**: Add changes to "Current" section - DO NOT pre-assign version numbers
+- **CI/CD Responsibility**: When merging to `master`, CI assigns version number from `package.json` and creates git tag
+
+### Steps for Development Work
 1. Make code changes and create commits (AI can do this)
-2. Update version in `projects/ngx-monaco-tree/package.json`
-3. Update `CHANGELOG.md` with the new version, date, and changes
-4. Create a commit with both changes
-5. **Push to remote** (human responsibility only): `git push origin develop`
-6. Create a pull request from `develop` to `master` (human responsibility)
-7. Merge PR to `master` (human responsibility)
-8. CI/CD pipeline automatically creates git tag and publishes to npm
+2. Update `CHANGELOG.md` **"Current"** section with a description of changes
+3. DO NOT add version numbers or dates to changes yet
+4. Update `projects/ngx-monaco-tree/package.json` version only if intentional (major/minor/patch bump)
+5. Create commit with all changes
+
+### Steps When Publishing (Human Responsibility)
+1. **Push to remote**: `git push origin develop`
+2. **Create PR**: From `develop` → `master`
+3. **Merge PR**: To `master`
+4. **CI/CD pipeline automatically**:
+   - Reads version from `package.json`
+   - Creates git tag `vX.Y.Z`
+   - Moves "Current" section into numbered version section with date
+   - Resets "Current" to empty
+   - Publishes to npm
