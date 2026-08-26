@@ -170,9 +170,8 @@ describe('NgxMonacoTreeComponent', () => {
       fixture.detectChanges();
 
       const treeElement = fixture.nativeElement.querySelector('.monaco-tree');
-      const style = treeElement.getAttribute('style');
-      expect(style).toContain('width:400px');
-      expect(style).toContain('height:600px');
+      expect(treeElement.style.width).toBe('400px');
+      expect(treeElement.style.height).toBe('600px');
     });
   });
 
