@@ -163,12 +163,15 @@ The library is built using **ng-packagr**, which compiles TypeScript and outputs
 ### Important Constraints
 - **Pushing**: Only humans can push commits to the repository. The AI will never push.
 - **Commits**: The AI can freely create commits.
+- **Tags**: The CI/CD pipeline (GitHub Actions) automatically creates tags based on version bumps on `master` branch.
 - **Changelog Updates**: Every new version MUST include an update to `CHANGELOG.md` before release.
 
 ### Steps for a Release
 1. Make code changes and create commits (AI can do this)
 2. Update version in `projects/ngx-monaco-tree/package.json`
 3. Update `CHANGELOG.md` with the new version, date, and changes
-4. Create a git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z - description"`
-5. **Push to remote** (human responsibility): `git push origin develop` and `git push origin --tags`
-6. Publish to npm from CI/CD pipeline (GitHub Actions)
+4. Create a commit with both changes
+5. **Push to remote** (human responsibility only): `git push origin develop`
+6. Create a pull request from `develop` to `master` (human responsibility)
+7. Merge PR to `master` (human responsibility)
+8. CI/CD pipeline automatically creates git tag and publishes to npm
