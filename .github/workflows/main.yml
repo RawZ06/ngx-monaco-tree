@@ -65,10 +65,10 @@ jobs:
           with open("$CHANGELOG_FILE", "r") as f:
               content = f.read()
 
-          # Replace first occurrence of "### Current" with versioned section
+          # Replace first occurrence of "### Current" with versioned section (Current stays first)
           new_content = content.replace(
               "### Current\n",
-              f"### {version} ({date})\n\n### Current\n",
+              f"### Current\n\n### {version} ({date})\n",
               1
           )
 
