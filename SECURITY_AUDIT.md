@@ -35,7 +35,6 @@
 | `@angular/cdk` | 22.1.1 | ✅ Latest stable |
 | `@angular/animations` | 22.1.3 | ℹ️ Deprecated (Angular internal) |
 | `@angular/platform-browser` | 22.1.3 | ✅ Latest stable |
-| `@angular/platform-browser-dynamic` | 22.1.3 | ℹ️ Deprecated (Angular internal) |
 | `rxjs` | 7.8.2 | ✅ Latest stable |
 | `tslib` | 2.8.1 | ✅ Latest stable |
 | `zone.js` | 0.16.0 | ✅ Latest stable |
@@ -51,18 +50,18 @@
 | `ng-packagr` | 22.1.1 | ✅ Latest stable |
 | `karma` | 6.4.4 | ✅ Latest stable |
 | `jasmine-core` | 5.13.0 | ✅ Stable (v7 available) |
-| `@types/jasmine` | 5.1.15 | ⚠️ Minor update (v6 available) |
+| `@types/jasmine` | 6.0.0 | ✅ Latest stable |
 
 ---
 
 ## Available Updates (Non-Critical)
 
-### Minor Updates (Safe)
-- **@types/jasmine**: 5.1.15 → 6.0.0
+### ✅ Recently Updated
+- **@types/jasmine**: 5.1.15 → **6.0.0** ✅
   - Type: Minor version bump
-  - Risk Level: **Low**
-  - Recommendation: **Safe to update**
-  - Action: `pnpm update @types/jasmine@6.0.0`
+  - Risk Level: **Very Low**
+  - Status: **Updated - no breaking changes found**
+  - Benefits: Better type definitions for latest Jasmine
 
 ### Major Version Updates (Review Required)
 - **jasmine-core**: 5.13.0 → 7.0.2
@@ -90,11 +89,14 @@
 - **Security Impact**: **None** - still fully supported
 - **Action Required**: None for compatibility; can refactor later
 
-### ℹ️ @angular/platform-browser-dynamic
-- **Status**: Marked as deprecated by Angular
-- **Reason**: Angular recommends using `@angular/platform-browser`
-- **Security Impact**: **None** - still fully supported
-- **Action Required**: None for compatibility
+### ✅ @angular/platform-browser-dynamic (Removed)
+- **Previous Status**: Marked as deprecated by Angular
+- **Action Taken**: **Removed from dependencies** ✅
+- **How**: Migrated test.ts to use `@angular/platform-browser/testing`
+  - Changed `BrowserDynamicTestingModule` → `BrowserTestingModule`
+  - Changed `platformBrowserDynamicTesting()` → `platformBrowserTesting()`
+- **Benefit**: Removes deprecated package, uses recommended API
+- **Compatibility**: ✅ All tests still work correctly
 
 ---
 
@@ -137,6 +139,11 @@ All core dependencies are at stable, supported versions. The codebase is:
 - ✅ **Up-to-date** - Latest stable versions for Angular 22
 - ✅ **Maintained** - Regular security audits recommended
 - ✅ **Production-ready** - Safe for deployment
+
+### Recent Improvements
+✅ **@angular/platform-browser-dynamic removed** - Replaced with modern `@angular/platform-browser/testing`  
+✅ **@types/jasmine upgraded to 6.0.0** - Latest minor version with no breaking changes  
+✅ **All deprecation warnings resolved** - Except @angular/animations (Angular internal)
 
 ### Recommendation
 **Deploy with confidence.** Regular `pnpm audit` checks (weekly) are recommended to maintain security posture.
