@@ -109,7 +109,7 @@ describe('NgxMonacoTree - Integration Tests', () => {
     it('should maintain file selection across theme changes', () => {
       const testFile = 'src/main.ts';
       component.currentFile.set(testFile);
-      component.theme = signal('vs-light');
+      fixture.componentRef.setInput('theme', 'vs-light');
       fixture.detectChanges();
 
       expect(component.currentFile()).toBe(testFile);

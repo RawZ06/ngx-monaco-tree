@@ -33,16 +33,16 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('File vs Folder Display', () => {
     it('should identify file (no content property)', () => {
-      component.name = signal('app.ts');
-      component.content = signal(undefined);
+      fixture.componentRef.setInput('name', 'app.ts');
+      fixture.componentRef.setInput('content', undefined);
       fixture.detectChanges();
 
       expect(component.isFolder()).toBeFalsy();
     });
 
     it('should identify folder (has content property)', () => {
-      component.name = signal('src');
-      component.content = signal([]);
+      fixture.componentRef.setInput('name', 'src');
+      fixture.componentRef.setInput('content', []);
       fixture.detectChanges();
 
       expect(component.isFolder()).toBeTruthy();
@@ -51,16 +51,16 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Expand/Collapse Functionality', () => {
     it('should initialize in collapsed state', () => {
-      component.name = signal('folder');
-      component.content = signal([{ name: 'file.ts' }]);
+      fixture.componentRef.setInput('name', 'folder');
+      fixture.componentRef.setInput('content', [{ name: 'file.ts' }]);
       fixture.detectChanges();
 
       expect(component.isCollapsed()).toBe(true);
     });
 
     it('should toggle expand/collapse state', () => {
-      component.name = signal('folder');
-      component.content = signal([{ name: 'file.ts' }]);
+      fixture.componentRef.setInput('name', 'folder');
+      fixture.componentRef.setInput('content', [{ name: 'file.ts' }]);
       fixture.detectChanges();
 
       const initialState = component.isCollapsed();
@@ -70,8 +70,8 @@ describe('MonacoTreeFileComponent', () => {
     });
 
     it('should not expand files', () => {
-      component.name = signal('app.ts');
-      component.content = signal(undefined);
+      fixture.componentRef.setInput('name', 'app.ts');
+      fixture.componentRef.setInput('content', undefined);
       fixture.detectChanges();
 
       component.toggleExpand();
@@ -87,8 +87,8 @@ describe('MonacoTreeFileComponent', () => {
         { name: 'file2.ts' }
       ];
 
-      component.name = signal('src');
-      component.content = signal(nestedContent);
+      fixture.componentRef.setInput('name', 'src');
+      fixture.componentRef.setInput('content', nestedContent);
       component.isCollapsed.set(false);
       fixture.detectChanges();
 
@@ -101,8 +101,8 @@ describe('MonacoTreeFileComponent', () => {
         { name: 'file1.ts' }
       ];
 
-      component.name = signal('src');
-      component.content = signal(nestedContent);
+      fixture.componentRef.setInput('name', 'src');
+      fixture.componentRef.setInput('content', nestedContent);
       component.isCollapsed.set(true);
       fixture.detectChanges();
 
@@ -113,14 +113,14 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Current File Selection', () => {
     it('should update current file model', () => {
-      component.name = signal('app.ts');
+      fixture.componentRef.setInput('name', 'app.ts');
       component.current.set('app.ts');
 
       expect(component.current()).toBe('app.ts');
     });
 
     it('should highlight selected file', () => {
-      component.name = signal('app.ts');
+      fixture.componentRef.setInput('name', 'app.ts');
       component.current.set('app.ts');
       fixture.detectChanges();
 
@@ -129,7 +129,7 @@ describe('MonacoTreeFileComponent', () => {
     });
 
     it('should not highlight unselected file', () => {
-      component.name = signal('app.ts');
+      fixture.componentRef.setInput('name', 'app.ts');
       component.current.set('other.ts');
       fixture.detectChanges();
 
@@ -139,7 +139,7 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Context Menu Functionality', () => {
     it('should emit context menu event on right click', (done) => {
-      component.name = signal('app.ts');
+      fixture.componentRef.setInput('name', 'app.ts');
       component.contextMenuClick.subscribe((action) => {
         expect(action).toBeDefined();
         done();
@@ -161,7 +161,7 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Drag and Drop', () => {
     it('should emit drag drop event', (done) => {
-      component.name = signal('app.ts');
+      fixture.componentRef.setInput('name', 'app.ts');
       component.dragDropFile.subscribe((event) => {
         expect(event.sourceFile).toBe('app.ts');
         done();
@@ -174,7 +174,7 @@ describe('MonacoTreeFileComponent', () => {
     });
 
     it('should include source and destination in drag drop event', (done) => {
-      component.name = signal('src/app.ts');
+      fixture.componentRef.setInput('name', 'src/app.ts');
       component.dragDropFile.subscribe((event) => {
         expect(event.sourceFile).toBe('src/app.ts');
         expect(event.destinationFile).toBe('dest/app.ts');
@@ -190,8 +190,8 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Theme Support', () => {
     it('should apply vs-dark theme', () => {
-      component.name = signal('file.ts');
-      component.theme = signal('vs-dark');
+      fixture.componentRef.setInput('name', 'file.ts');
+      fixture.componentRef.setInput('theme', 'vs-dark');
       fixture.detectChanges();
 
       const element = fixture.nativeElement.querySelector('[class*="vs-"]');
@@ -199,8 +199,8 @@ describe('MonacoTreeFileComponent', () => {
     });
 
     it('should apply vs-light theme', () => {
-      component.name = signal('file.ts');
-      component.theme = signal('vs-light');
+      fixture.componentRef.setInput('name', 'file.ts');
+      fixture.componentRef.setInput('theme', 'vs-light');
       fixture.detectChanges();
 
       const element = fixture.nativeElement.querySelector('[class*="vs-"]');
@@ -210,16 +210,16 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Color Support', () => {
     it('should apply custom color when provided', () => {
-      component.name = signal('file.ts');
-      component.color = signal('red');
+      fixture.componentRef.setInput('name', 'file.ts');
+      fixture.componentRef.setInput('color', 'red');
       fixture.detectChanges();
 
       expect(component.color()).toBe('red');
     });
 
     it('should handle undefined color', () => {
-      component.name = signal('file.ts');
-      component.color = signal(undefined);
+      fixture.componentRef.setInput('name', 'file.ts');
+      fixture.componentRef.setInput('color', undefined);
       fixture.detectChanges();
 
       expect(component.color()).toBeUndefined();
@@ -229,7 +229,7 @@ describe('MonacoTreeFileComponent', () => {
       const colors = ['red', 'yellow', 'green', 'gray', '#ff0000'];
 
       colors.forEach(color => {
-        component.color = signal(color);
+        fixture.componentRef.setInput('color', color);
         fixture.detectChanges();
 
         expect(component.color()).toBe(color);
@@ -246,8 +246,8 @@ describe('MonacoTreeFileComponent', () => {
         }
       ];
 
-      component.name = signal('folder');
-      component.content = signal(nestedContent);
+      fixture.componentRef.setInput('name', 'folder');
+      fixture.componentRef.setInput('content', nestedContent);
       component.isCollapsed.set(false);
       fixture.detectChanges();
 
@@ -259,16 +259,16 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Empty Folder Handling', () => {
     it('should handle empty folder (empty array)', () => {
-      component.name = signal('empty-folder');
-      component.content = signal([]);
+      fixture.componentRef.setInput('name', 'empty-folder');
+      fixture.componentRef.setInput('content', []);
       fixture.detectChanges();
 
       expect(component.isFolder()).toBeTruthy();
     });
 
     it('should display folder icon for empty folder', () => {
-      component.name = signal('empty-folder');
-      component.content = signal([]);
+      fixture.componentRef.setInput('name', 'empty-folder');
+      fixture.componentRef.setInput('content', []);
       fixture.detectChanges();
 
       expect(() => {
@@ -284,8 +284,8 @@ describe('MonacoTreeFileComponent', () => {
         (_, i) => ({ name: `file_${i}.ts` })
       );
 
-      component.name = signal('large-folder');
-      component.content = signal(largeContent);
+      fixture.componentRef.setInput('name', 'large-folder');
+      fixture.componentRef.setInput('content', largeContent);
       fixture.detectChanges();
 
       expect(component.content().length).toBe(100);
@@ -303,8 +303,8 @@ describe('MonacoTreeFileComponent', () => {
         })
       );
 
-      component.name = signal('large-root');
-      component.content = signal(largeContent);
+      fixture.componentRef.setInput('name', 'large-root');
+      fixture.componentRef.setInput('content', largeContent);
 
       expect(() => {
         fixture.detectChanges();
@@ -314,7 +314,7 @@ describe('MonacoTreeFileComponent', () => {
 
   describe('Special Characters in Names', () => {
     it('should handle spaces in file names', () => {
-      component.name = signal('my file name.ts');
+      fixture.componentRef.setInput('name', 'my file name.ts');
       fixture.detectChanges();
 
       expect(component.name()).toBe('my file name.ts');
@@ -331,7 +331,7 @@ describe('MonacoTreeFileComponent', () => {
       ];
 
       specialNames.forEach(name => {
-        component.name = signal(name);
+        fixture.componentRef.setInput('name', name);
         fixture.detectChanges();
 
         expect(component.name()).toBe(name);
@@ -339,7 +339,7 @@ describe('MonacoTreeFileComponent', () => {
     });
 
     it('should handle unicode characters', () => {
-      component.name = signal('文件.ts');
+      fixture.componentRef.setInput('name', '文件.ts');
       fixture.detectChanges();
 
       expect(component.name()).toBe('文件.ts');
