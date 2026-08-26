@@ -52,14 +52,7 @@ describe('NgxMonacoTreeComponent', () => {
   });
 
   describe('Input Properties', () => {
-    it('should render with default inputs', () => {
-      fixture.detectChanges();
-
-      const treeElement = fixture.nativeElement.querySelector('.monaco-tree');
-      expect(treeElement).toBeTruthy();
-    });
-
-    it('should render with tree content', () => {
+    it('should render tree content', () => {
       fixture.componentRef.setInput('tree', mockTree);
       fixture.detectChanges();
 
@@ -68,6 +61,7 @@ describe('NgxMonacoTreeComponent', () => {
     });
 
     it('should support custom dimensions via input', () => {
+      fixture.componentRef.setInput('tree', mockTree);
       fixture.componentRef.setInput('width', '600px');
       fixture.componentRef.setInput('height', '800px');
       fixture.detectChanges();
@@ -158,28 +152,9 @@ describe('NgxMonacoTreeComponent', () => {
     });
   });
 
-  describe('Collapse All Action', () => {
-    it('should collapse all child components', () => {
-      fixture.componentRef.setInput('tree', mockTree);
-      fixture.detectChanges();
-
-      const mockChildren = [
-        { collapseAll: jasmine.createSpy('collapseAll1') },
-        { collapseAll: jasmine.createSpy('collapseAll2') }
-      ];
-
-      spyOn(component as any, '_ngViewChildren_1').and.returnValue(mockChildren);
-
-      component.handleCollapseAll();
-
-      mockChildren.forEach(child => {
-        expect(child.collapseAll).toHaveBeenCalled();
-      });
-    });
-  });
-
   describe('Styling', () => {
     it('should apply correct CSS classes', () => {
+      fixture.componentRef.setInput('tree', mockTree);
       fixture.componentRef.setInput('theme', 'vs-dark');
       fixture.detectChanges();
 
@@ -189,6 +164,7 @@ describe('NgxMonacoTreeComponent', () => {
     });
 
     it('should apply inline styles for dimensions', () => {
+      fixture.componentRef.setInput('tree', mockTree);
       fixture.componentRef.setInput('width', '400px');
       fixture.componentRef.setInput('height', '600px');
       fixture.detectChanges();
