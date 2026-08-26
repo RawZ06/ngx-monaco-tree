@@ -157,3 +157,18 @@ The library is built using **ng-packagr**, which compiles TypeScript and outputs
 - **Drag-drop**: Uses Angular CDK's `CdkDropList` for drop zone detection
 - **Path tracking**: Files emit their full path (e.g., `src/app/app.component.ts`) when clicked
 - **In-memory tree**: The tree is entirely in-memory; mutations happen via event handlers
+
+## Release Process
+
+### Important Constraints
+- **Pushing**: Only humans can push commits to the repository. The AI will never push.
+- **Commits**: The AI can freely create commits.
+- **Changelog Updates**: Every new version MUST include an update to `CHANGELOG.md` before release.
+
+### Steps for a Release
+1. Make code changes and create commits (AI can do this)
+2. Update version in `projects/ngx-monaco-tree/package.json`
+3. Update `CHANGELOG.md` with the new version, date, and changes
+4. Create a git tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z - description"`
+5. **Push to remote** (human responsibility): `git push origin develop` and `git push origin --tags`
+6. Publish to npm from CI/CD pipeline (GitHub Actions)

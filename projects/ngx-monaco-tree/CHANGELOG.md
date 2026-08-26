@@ -1,6 +1,14 @@
 ## Changelog
 
 ### Current
+
+### 21.0.0 (2026-08-26)
+- Migrate to Angular 21
+- Update peerDependencies to Angular >= 21.1.0, CDK >= 21.1.0
+- Update @vscode/codicons to ~0.0.44
+- Add comprehensive CLAUDE.md documentation for future development
+
+### 20.1.0
 - Migrate to Angular 20 (thank to matthieu-crouzet)
 
 ### 19.1.0
