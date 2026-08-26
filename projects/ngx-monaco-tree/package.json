@@ -6,7 +6,7 @@
 	"author": "RawZ06",
 	"repository": "RawZ06/ngx-monaco-tree",
 	"engines": {
-		"node": ">= 20"
+		"node": ">= 22"
 	},
 	"keywords": [
 		"angular",
