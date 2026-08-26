@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - less
+  - lmdb
+  - msgpackr-extract
