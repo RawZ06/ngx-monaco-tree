@@ -1,6 +1,8 @@
 ## Changelog
 
 ### Current
+
+### 22.2.0 (2026-08-26)
 - **BREAKING**: Migrate to Angular 22 (requires Angular 22.1.0+)
 - Update TypeScript to 6.0.3 (required for Angular 22)
 - Update all dependencies to latest stable versions
