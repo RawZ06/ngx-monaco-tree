@@ -1,6 +1,6 @@
 {
 	"name": "ngx-monaco-tree",
-	"version": "21.0.0",
+	"version": "22.0.0",
 	"license": "MIT",
 	"description": "A tree view based on monaco-editor powered by VSCode.",
 	"author": "RawZ06",
@@ -23,12 +23,12 @@
 		"visual studio code"
 	],
 	"peerDependencies": {
-		"@angular/common": ">= 21.1.0",
-		"@angular/core": ">= 21.1.0",
-		"@angular/cdk": ">= 21.1.0",
-		"@vscode/codicons": "~0.0.44"
+		"@angular/common": ">= 22.1.0",
+		"@angular/core": ">= 22.1.0",
+		"@angular/cdk": ">= 22.1.0",
+		"@vscode/codicons": "~0.0.45"
 	},
 	"dependencies": {
-		"tslib": "^2.7.0"
+		"tslib": "^2.8.1"
 	}
 }
