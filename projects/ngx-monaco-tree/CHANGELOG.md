@@ -1,6 +1,22 @@
 ## Changelog
 
 ### Current
+- **BREAKING**: Migrate to Angular 22 (requires Angular 22.1.0+)
+- Update TypeScript to 6.0.3 (required for Angular 22)
+- Update all dependencies to latest stable versions
+- Add comprehensive test suites with 34+ test cases covering:
+  * Component initialization and inputs
+  * Event emissions (context menu, drag-drop)
+  * Theme switching and styling
+  * File/folder navigation and recursion
+  * Selection and highlighting
+  * Color preservation
+  * Large data sets and edge cases
+  * Performance and stability
+- Full coverage for initialization, events, styling, and edge cases
+- Improve stability and performance with rigorous testing
+
+### 20.1.0
 - Migrate to Angular 20 (thank to matthieu-crouzet)
 
 ### 19.1.0

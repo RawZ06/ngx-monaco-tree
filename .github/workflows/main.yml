@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [22.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -43,6 +43,45 @@ jobs:
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
           git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+
+      - name: Update CHANGELOG with version
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd projects/ngx-monaco-tree
+          VERSION=$(node -p "require('./package.json').version")
+          DATE=$(date +%Y-%m-%d)
+
+          # Read the CHANGELOG
+          CHANGELOG_FILE="CHANGELOG.md"
+
+          # Replace "### Current" with "### X.Y.Z (DATE)" and add new Current section
+          python3 << EOF
+          import re
+          from datetime import datetime
+
+          version = "$VERSION"
+          date = "$DATE"
+
+          with open("$CHANGELOG_FILE", "r") as f:
+              content = f.read()
+
+          # Replace first occurrence of "### Current" with versioned section
+          new_content = content.replace(
+              "### Current\n",
+              f"### {version} ({date})\n\n### Current\n",
+              1
+          )
+
+          with open("$CHANGELOG_FILE", "w") as f:
+              f.write(new_content)
+          EOF
+
+          # Commit and push the updated CHANGELOG
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          git add CHANGELOG.md
+          git commit -m "docs: Update CHANGELOG for release v${VERSION}"
+          git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
 
       - name: Build project
         run: pnpm run build ngx-monaco-tree
