@@ -2,6 +2,14 @@
 
 ### Current
 
+### 22.0.0 (2026-08-26)
+- **BREAKING**: Migrate to Angular 22 (requires Angular 22.1.0+)
+- Update TypeScript to 6.0.3 (required for Angular 22)
+- Update all dependencies to latest stable versions
+- Add comprehensive test suites with 34+ test cases
+- Full coverage for component initialization, events, styling, and edge cases
+- Improve stability and performance with rigorous testing
+
 ### 21.0.0 (2026-08-26)
 - Migrate to Angular 21
 - Update peerDependencies to Angular >= 21.1.0, CDK >= 21.1.0
